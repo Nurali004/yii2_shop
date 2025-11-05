@@ -111,4 +111,6 @@
     </div>
 </section>
 
+
+
 <?= ShopWidget::widget() ?>

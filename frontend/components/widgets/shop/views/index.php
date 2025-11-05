@@ -3,45 +3,42 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="section-title">
-                    <h2>Featured Products</h2>
+                    <h2>Ko'p tanlangan Products</h2>
                 </div>
             </div>
         </div>
         <div class="features-wrapper">
             <div class="features-active slick-initialized slick-slider">
                 <div class="slick-list draggable">
-                    <div class="slick-track" style="opacity: 1; width: 4160px; transform: translate3d(-1600px, 0px, 0px); transition: transform 500ms;">
+                    <div class="slick-track">
                         <?php foreach ($products as $product): ?>
-                        <div class="product-item slick-slide slick-cloned" data-slick-index="-3" aria-hidden="true" tabindex="-1" style="width: 290px;">
-                            <div class="product-item-image">
-                                <a href="/" tabindex="-1"><img src="/<?= $product->img ?>" alt="Product Name" class="img-fluid"></a>
-                                <div class="cart-icon">
-                                    <a href="#" tabindex="-1"><i class="far fa-heart"></i></a>
-                                    <a href="#" tabindex="-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16.75" height="16.75" viewBox="0 0 16.75 16.75">
-                                            <g id="" data-name="Your Bag" transform="translate(0.75)">
-                                                <g id="" transform="translate(0 1)">
-                                                    <ellipse id="" data-name="Ellipse 2" cx="0.682" cy="0.714" rx="0.682" ry="0.714" transform="translate(4.773 13.571)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></ellipse>
-                                                    <ellipse id="" data-name="Ellipse 3" cx="0.682" cy="0.714" rx="0.682" ry="0.714" transform="translate(12.273 13.571)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></ellipse>
-                                                    <path id="" data-name="Path 3" d="M1,1H3.727l1.827,9.564a1.38,1.38,0,0,0,1.364,1.15h6.627a1.38,1.38,0,0,0,1.364-1.15L16,4.571H4.409" transform="translate(-1 -1)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                            <div class="product-item slick-slide slick-cloned" data-slick-index="-3" aria-hidden="true" tabindex="-1" style="width: 290px;">
+                                <div class="product-item-image">
+                                    <a href="/" tabindex="-1"><img src="/<?= $product->img ?>" alt="Product Name" class="img-fluid"></a>
+                                    <div class="cart-icon">
+                                        <a href="#" tabindex="-1"><i class="far fa-heart"></i></a>
+                                        <a href="#" tabindex="-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16.75" height="16.75" viewBox="0 0 16.75 16.75">
+                                                <g id="" data-name="Your Bag" transform="translate(0.75)">
+                                                    <g id="" transform="translate(0 1)">
+                                                        <ellipse id="" data-name="Ellipse 2" cx="0.682" cy="0.714" rx="0.682" ry="0.714" transform="translate(4.773 13.571)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></ellipse>
+                                                        <ellipse id="" data-name="Ellipse 3" cx="0.682" cy="0.714" rx="0.682" ry="0.714" transform="translate(12.273 13.571)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></ellipse>
+                                                        <path id="" data-name="Path 3" d="M1,1H3.727l1.827,9.564a1.38,1.38,0,0,0,1.364,1.15h6.627a1.38,1.38,0,0,0,1.364-1.15L16,4.571H4.409" transform="translate(-1 -1)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                                                    </g>
                                                 </g>
-                                            </g>
-                                        </svg>
-                                    </a>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="product-item-info">
+                                    <a href="/" tabindex="-1"><?= $product->name ?></a>
+                                    <span><?= $product->price ?></span>
                                 </div>
                             </div>
-                            <div class="product-item-info">
-                                <a href="product-details.html" tabindex="-1">BERRY TYPE-II: C1N Backpack</a>
-                                <span>$975</span> <del>$999</del>
-                            </div>
-                        </div>
-
-                        <?php endforeach; ?>
+                        <?php endforeach?>
 
                     </div>
                 </div>
-
-
 
 
             </div>
