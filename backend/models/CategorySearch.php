@@ -11,6 +11,7 @@ use common\models\Category;
  */
 class CategorySearch extends Category
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'pid', 'order'], 'integer'],
-            [['name'], 'safe'],
+            [['name', 'globalSearch'], 'safe'],
         ];
     }
 

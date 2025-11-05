@@ -16,11 +16,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php if (Yii::$app->user->can('admin')): ?>
 
-    <p>
-        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        <p>
+            <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+
+    <?php endif; ?>
+
+
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,6 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'pager' => [
+                'class' => yii\bootstrap5\LinkPager::class,
+
+
+],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -35,6 +44,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
           //  'description:ntext',
             'price',
+                [
+                        'attribute' => 'img',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return "<img src='/$model->img' alt='$model->img' width='100'>";
+                        }
+                ],
 
                 [
                         'attribute' => 'category_id',
@@ -54,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_at',
             [
                 'class' => ActionColumn::class,
+//                'template'=> Yii::$app->user->can('admin') ? '{update} {delete}' : '{view}',
                 'urlCreator' => function ($action, Product $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

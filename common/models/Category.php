@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -12,6 +13,7 @@ use yii\helpers\ArrayHelper;
  * @property int|null $pid
  * @property string|null $name
  * @property int|null $order
+ * @property int|null $img
  *
  * @property Category[] $categories
  * @property Category $p
@@ -19,6 +21,10 @@ use yii\helpers\ArrayHelper;
  */
 class Category extends \yii\db\ActiveRecord
 {
+
+    public $imageFile;
+
+
 
 
     /**
@@ -38,8 +44,9 @@ class Category extends \yii\db\ActiveRecord
             [['pid', 'name'], 'default', 'value' => null],
             [['order'], 'default', 'value' => 0],
             [['pid', 'order'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'img'], 'string', 'max' => 255],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['pid' => 'id']],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, webp'],
         ];
     }
 
@@ -52,9 +59,12 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'pid' => 'Pid',
             'name' => 'Name',
+            'img' => 'Img',
             'order' => 'Order',
         ];
     }
+
+
 
     /**
      * Gets query for [[Categories]].
@@ -89,6 +99,20 @@ class Category extends \yii\db\ActiveRecord
     public static function CategoryList()
     {
         return ArrayHelper::map(Category::find()->all(), 'id', 'name');
+
+    }
+
+    public function upload()
+    {
+        if ($this->validate()){
+            $filePath = 'uploads/category/' .$this->imageFile->baseName.'_'. Yii::$app->security->generateRandomString(6). '.' . $this->imageFile->extension;
+            $fileSavePath = Yii::getAlias('@frontend'). '/web/' . $filePath;
+            $this->imageFile->saveAs($fileSavePath);
+            $this->img = $filePath;
+            return true;
+        }else{
+            return false;
+        }
 
     }
 

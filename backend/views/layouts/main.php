@@ -10,7 +10,7 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
-AppAsset::register($this);
+\backend\assets\DashmixAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -41,6 +41,9 @@ AppAsset::register($this);
         ['label' => 'Order', 'url' => ['/order/index']],
         ['label' => 'Customer', 'url' => ['/customer/index']],
         ['label' => 'Cart', 'url' => ['/cart/index']],
+        ['label' => 'ProductImage', 'url' => ['/product-image/index']],
+        ['label' => 'Slider', 'url' => ['/slider/index']],
+        ['label' => 'Settings', 'url' => ['/setting/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

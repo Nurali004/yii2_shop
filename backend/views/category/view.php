@@ -38,6 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'name',
+                [
+                        'attribute' => 'img',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return "<img src='/$model->img' alt='$model->img' width='100'>";
+                        }
+                ],
             'order',
         ],
     ]) ?>

@@ -13,36 +13,49 @@ use yii\widgets\Pjax;
 $this->title = 'Carts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="cart-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Cart', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<div class="block block-rounded">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">Table</h3>
+        <div class="block-options">
+            <div class="block-options-item">
+                <code>.table</code>
+            </div>
+        </div>
+    </div>
+    <div class="block-content">
 
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+        <p>
+            <?= Html::a('Create Cart', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        <?php Pjax::begin(); ?>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-            'id',
-            'user_id',
-            'product_id',
-            'count',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Cart $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
+        <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
 
-    <?php Pjax::end(); ?>
+                        'id',
+                        'user_id',
+                        'product_id',
+                        'count',
+                        [
+                                'class' => ActionColumn::className(),
+                                'urlCreator' => function ($action, Cart $model, $key, $index, $column) {
+                                    return Url::toRoute([$action, 'id' => $model->id]);
+                                }
+                        ],
+                ],
+        ]); ?>
 
+        <?php Pjax::end(); ?>
+
+
+    </div>
 </div>
+
+

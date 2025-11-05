@@ -10,7 +10,7 @@ use yii\web\AssetBundle;
 class DashmixAsset extends AssetBundle
 {
     public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $baseUrl = '/backend/web';
     public $css = [
         'css/site.css',
         'dashmix/css/dashmix.min.css',
@@ -18,7 +18,9 @@ class DashmixAsset extends AssetBundle
     ];
     public $js = [
 
-        'dashmix/js/dashmix.app.min.js'
+        'dashmix/js/dashmix.app.min.js',
+        'dashmix/js/plugins/jquery-validation/jquery.validate.js',
+        'dashmix/js/pages/op_auth_signin.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
@@ -27,3 +29,5 @@ class DashmixAsset extends AssetBundle
         'yii\bootstrap5\BootstrapPluginAsset',
     ];
 }
+
+

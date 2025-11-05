@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use common\models\Category;
 use backend\models\CategorySearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -22,6 +24,16 @@ class CategoryController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                       [
+                           'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                           'allow' => true,
+                           'roles' => ['@'],
+                       ]
+                    ]
+                ],
                 'verbs' => [
                     'class' => VerbFilter::class,
                     'actions' => [
@@ -71,11 +83,16 @@ class CategoryController extends Controller
         $model = new Category();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+
+            if ($this->request->isPost) {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                $model->upload();
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -94,9 +111,17 @@ class CategoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if (!is_null($model->imageFile)) {
+                $model->upload();
+            }
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
+
 
         return $this->render('update', [
             'model' => $model,

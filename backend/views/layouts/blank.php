@@ -6,7 +6,7 @@
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 
-AppAsset::register($this);
+\backend\assets\DashmixAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

@@ -2,10 +2,17 @@
 
 namespace frontend\controllers;
 
+use backend\models\ProductSearch;
+use common\models\Category;
+use common\models\Partner;
+use common\models\Product;
+use common\models\ProductImage;
+use common\models\Slider;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\Pagination;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -21,6 +28,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    public $layout = 'front-layout';
     /**
      * {@inheritdoc}
      */
@@ -68,6 +76,36 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionImage($id)
+    {
+        $products = Product::find()->where(['id' => $id])->all();
+        $product_images = ProductImage::find()->where(['product_id' => $id])->all();
+
+        return $this->render('image', ['products' => $products, 'product_images' => $product_images]);
+
+
+    }
+
+    public function actionShop()
+    {
+
+
+        $categories = Category::find()->all();
+        $count = Product::find()->count();
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 6]);
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $products = Product::find()->limit($pagination->limit)->offset($pagination->offset)->all();
+
+        return $this->render('shop', ['products' => $products,
+            'searchModel' => $searchModel,
+            'count' => $count,
+            'dataProvider' => $dataProvider,
+            'pagination' => $pagination,
+            'categories' => $categories,]);
+
+    }
+
     /**
      * Displays homepage.
      *
@@ -75,7 +113,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $categories = Category::find()->all();
+        $products = Product::find()->limit(9)->all();
+        $sliders = Slider::find()->orderBy(['order'=> SORT_DESC])->all();
+        $product_images = ProductImage::find()->where(['product_id'=> 'id'])->limit(6)->all();
+        $brands = Partner::find()->orderBy(['order'=> SORT_DESC])->all();
+        return $this->render('index', ['brands' => $brands, 'product_images' => $product_images, 'sliders' => $sliders, 'categories' => $categories, 'products' => $products]);
     }
 
     /**

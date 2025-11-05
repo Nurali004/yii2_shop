@@ -18,6 +18,7 @@ use yii\web\IdentityInterface;
  * @property string $verification_token
  * @property string $email
  * @property string $auth_key
+ * @property string $role
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -28,6 +29,10 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER = 'user';
+    const ROLE_MODERATOR = 'moderator';
 
 
     /**
@@ -209,5 +214,21 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function is_Admin()
+    {
+        return $this->role === self::ROLE_ADMIN ? true : false;
+
+    }
+
+    public function is_Moderator()
+    {
+        return $this->role === self::ROLE_MODERATOR ? true : false;
+
+    }
+
+    public function is_User(){
+        return $this->role === self::ROLE_USER ? true : false;
     }
 }

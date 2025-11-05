@@ -15,6 +15,7 @@ use Yii;
  */
 class ProductImage extends \yii\db\ActiveRecord
 {
+    public $imageFile;
 
 
     /**
@@ -35,6 +36,8 @@ class ProductImage extends \yii\db\ActiveRecord
             [['image'], 'string'],
             [['product_id'], 'integer'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png', 'jpg'], 'checkExtensionByMimeType' => false],
+
         ];
     }
 
@@ -58,6 +61,19 @@ class ProductImage extends \yii\db\ActiveRecord
     public function getProduct()
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $filePath = 'uploads/product-image/' . $this->imageFile->baseName . '_' . Yii::$app->security->generateRandomString(6) . '.' . $this->imageFile->extension;
+            $fileSavePath = Yii::getAlias('@frontend') . '/web/' . $filePath;
+            $this->imageFile->saveAs($fileSavePath);
+            $this->image = $filePath;
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

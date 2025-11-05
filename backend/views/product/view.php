@@ -40,6 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'status',
+                [
+                        'attribute' => 'img',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return "<img src='/$model->img' alt='$model->img' width='100'>";
+
+                        }
+                ],
             'order',
             'created_at',
             'updated_at',
@@ -47,3 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<?php foreach ($images as $image): ?>
+<?= "<img src='/$image->image' alt='$image->image' width='100'>";  ?>
+<?php endforeach; ?>

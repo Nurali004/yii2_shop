@@ -4,9 +4,14 @@ namespace backend\controllers;
 
 use common\models\Product;
 use backend\models\ProductSearch;
+use common\models\ProductImage;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
+
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -22,6 +27,8 @@ class ProductController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+
+
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -41,6 +48,8 @@ class ProductController extends Controller
     {
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = 7;
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -52,12 +61,14 @@ class ProductController extends Controller
      * Displays a single Product model.
      * @param int $id ID
      * @return string
-     * @throws NotFoundHttpException if the model cannot be found
+     *
      */
     public function actionView($id)
     {
+        $images = ProductImage::find()->where(['product_id' => $id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'images' => $images,
         ]);
     }
 
@@ -71,7 +82,29 @@ class ProductController extends Controller
         $model = new Product();
 
         if ($this->request->isPost) {
+
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if(!empty($model->imageFile)) {
+
+                $model->upload();
+            }
+
+
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+
+            if (!empty($model->imageFiles)) {
+
+                $ids = $model->uploads($model->id);
+
+            }
+
             if ($model->load($this->request->post()) && $model->save()) {
+                foreach ($ids as $id) {
+                    $productImage = ProductImage::find()->where(['id' => $id])->one();
+                    $productImage->product_id = $model->id;
+                    $productImage->save();
+                }
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -94,8 +127,23 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if (!is_null($model->imageFile)) {
+                $model->upload();
+            }
+
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+
+            if (!is_null($model->imageFiles)) {
+               $model->uploads($id);
+            }
+
+
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
 
         return $this->render('update', [
