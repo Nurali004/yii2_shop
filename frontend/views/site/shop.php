@@ -41,37 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h6>Category</h6>
                     <select style="display: none;">
                         <option data-display="Men">Men</option>
-                        <option value="1">Men</option>
-                        <option value="2">Men</option>
-                        <option value="4">Men</option>
+
                     </select>
-                    <div class="nice-select" tabindex="0">
-                        <span class="current"> Category Name</span>
-                        <ul class="list">
-                            <?php foreach ($categories as $category): ?>
 
-                                <li data-value="<?= $category->id ?>" class="option"><?= $category->name ?></li>
-
-                            <?php endforeach; ?>
-
-                        </ul>
-                    </div>
                 </div>
                 <div class="categoryitem-wrapper-price">
                     <h6>Price</h6>
 
-                    <div class="nice-select" tabindex="0">
-                        <span class="current"> Product Price</span>
-                        <ul class="list">
-                            <li data-value="Men" data-display="Men" class="option selected">Categoriyani tanlang..</li>
-                            <?php foreach ($categories as $category): ?>
-                                <?php foreach ($category->products as $price): ?>
-                                    <li data-value="1" class="option"><?= $price->price ?></li>
-                                <?php endforeach; ?>
-                            <?php endforeach; ?>
-
-                        </ul>
-                    </div>
                 </div>
 
             </div>
@@ -82,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <section class="populerproduct bg-white p-0 shop-product">
     <div class="container">
         <div class="row">
-            <?php foreach ($products as $product): ?>
+            <?php foreach ($dataProvider->getModels() as $product): ?>
                 <div class="col-md-4 col-sm-6">
                     <div class="product-item">
                         <div class="product-item-image">
@@ -123,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?=
 
                 \yii\bootstrap5\LinkPager::widget([
-                        'pagination' => $pagination,
+                        'pagination' => $dataProvider->pagination,
                         'options' => ['class' => 'cdp_i'],
 
                 ])

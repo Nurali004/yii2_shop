@@ -90,19 +90,16 @@ class SiteController extends Controller
     {
 
 
-        $categories = Category::find()->all();
-        $count = Product::find()->count();
-        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 6]);
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $products = Product::find()->limit($pagination->limit)->offset($pagination->offset)->all();
 
-        return $this->render('shop', ['products' => $products,
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+
+        return $this->render('shop', [
             'searchModel' => $searchModel,
-            'count' => $count,
+
             'dataProvider' => $dataProvider,
-            'pagination' => $pagination,
-            'categories' => $categories,]);
+
+            ]);
 
     }
 

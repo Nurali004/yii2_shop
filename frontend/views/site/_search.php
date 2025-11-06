@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="category-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['/site/shop'],
+        'action' => ['shop'],
         'method' => 'get',
         'options' => [
             'data-pjax' => 1
@@ -24,12 +24,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
+    <?= $form->field($model, 'category_id')->dropDownList([
+            \common\models\Category::CategoryList(),
+            ['prompt' => 'Select Category']
+    ]) ?>
+
 
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
+
 
     <?php ActiveForm::end(); ?>
 
