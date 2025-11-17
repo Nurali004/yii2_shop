@@ -20,9 +20,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'name_'.Yii::$app->language) ?>
 
-    <?= $form->field($model, 'description') ?>
+    <?= $form->field($model, 'description_'.Yii::$app->language) ?>
 
     <?= $form->field($model, 'price') ?>
 

@@ -17,24 +17,20 @@ class FrontAsset extends AssetBundle
 
     ];
     public $js = [
-
-        'src/js/jquery.min.js',
-        'src/js/bootstrap.min.js',
-
+        "src/js/jquery.min.js",
         'src/scss/vendors/plugin/js/jquery.nice-select.min.js',
-//        'dist/main.js',
-        'src/js/main.js',
 
         'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js',
 
-
-
+        'dist/main.js',
     ];
+
     public $depends = [
         'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
         'yii\bootstrap5\BootstrapAsset',
-        'yii\bootstrap5\BootstrapPluginAsset',
+
+
     ];
 }
 

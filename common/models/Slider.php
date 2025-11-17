@@ -51,10 +51,11 @@ class Slider extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'img' => 'Img',
-            'order' => 'Order',
-            'url' => 'Url',
+            'name' => Yii::t('partner', 'Name'),
+            'img' => Yii::t('partner', 'Img'),
+            'order' => Yii::t('partner', 'Order'),
+            'url' => Yii::t('slider', 'Url'),
+            'imageFile' => Yii::t('partner', 'ImageFile'),
         ];
     }
 

@@ -3,28 +3,34 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+$name = 'name'. '_'.Yii::$app->language;
+
 /** @var yii\web\View $this */
 /** @var common\models\Category $model */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
+$this->title = $model->$name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('category', 'Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="category-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+
+    <?php if (Yii::$app->user->identity->role === 'admin'): ?>
+
+        <p>
+            <?= Html::a(Yii::t('universal', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('universal', 'Delete'), ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                            'confirm' => 'Are you sure you want to delete this item?',
+                            'method' => 'post',
+                    ],
+            ]) ?>
+        </p>
+
+    <?php endif; ?>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -37,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->p->name ?? null;
                 }
             ],
-            'name',
+            'name'. '_'.Yii::$app->language,
                 [
                         'attribute' => 'img',
                         'format' => 'html',
@@ -45,7 +51,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             return "<img src='/$model->img' alt='$model->img' width='100'>";
                         }
                 ],
-            'order',
+            [
+                    'attribute' => 'order',
+                'format' => 'raw',
+                'value' => function ($model) {
+                   if ($model->order == 1) {
+                       return Yii::t('category', 'Faol');
+                   }
+                   return Yii::t('category', 'Faol emas');
+                }
+            ],
         ],
     ]) ?>
 

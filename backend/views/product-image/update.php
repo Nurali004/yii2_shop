@@ -5,14 +5,13 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\ProductImage $model */
 
-$this->title = 'Update Product Image: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Product Images', 'url' => ['index']];
+$this->title = Yii::t('product-image', 'Update Product Image'). ':' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('product-image', 'Product Images'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('partner', 'Update');
 ?>
 <div class="product-image-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

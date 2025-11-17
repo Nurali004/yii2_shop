@@ -21,7 +21,15 @@
       "ext-fileinfo": "*",
         "2amigos/yii2-tinymce-widget": "~1.1",
         "tinymce/tinymce": "7.6.1",
-        "mdmsoft/yii2-admin": "~2.0"
+        "mdmsoft/yii2-admin": "~2.0",
+        "kartik-v/yii2-grid": "dev-master",
+        "kartik-v/yii2-widget-select2": "dev-master",
+        "kartik-v/yii2-widget-datepicker": "dev-master",
+        "kartik-v/yii2-widget-fileinput": "dev-master",
+        "kartik-v/yii2-widget-switchinput": "dev-master",
+        "kartik-v/yii2-dynagrid": "^1.5",
+        "kartik-v/yii2-bootstrap5-dropdown": "@dev",
+        "kartik-v/yii2-datecontrol": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

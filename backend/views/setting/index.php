@@ -10,16 +10,14 @@ use yii\widgets\Pjax;
 /** @var backend\models\SettingSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Settings';
+$this->title = Yii::t('setting', 'Settings');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="setting-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Setting', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

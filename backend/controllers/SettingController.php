@@ -96,8 +96,9 @@ class SettingController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
+        $id = 1;
         $model = $this->findModel($id);
 
         if ($this->request->isPost) {

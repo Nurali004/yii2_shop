@@ -19,7 +19,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'pid', 'order'], 'integer'],
-            [['name', 'globalSearch'], 'safe'],
+            [['name_uz', 'name_ru', 'name_en','globalSearch'], 'safe'],
         ];
     }
 
@@ -65,7 +65,9 @@ class CategorySearch extends Category
             'order' => $this->order,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name_uz', $this->name_uz])
+            ->andFilterWhere(['like', 'name_ru', $this->name_ru])
+            ->andFilterWhere(['like', 'name_en', $this->name_en]);
 
         return $dataProvider;
     }

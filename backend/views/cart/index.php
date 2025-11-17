@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /** @var backend\models\CartSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Carts';
+$this->title = Yii::t('cart', 'Carts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -26,9 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="block-content">
 
-        <p>
-            <?= Html::a('Create Cart', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
+        <?php if (Yii::$app->user->can('admin')): ?>
+
+            <p>
+                <?= Html::a(Yii::t('cart', 'Create Cart'), ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+
+        <?php endif; ?>
 
         <?php Pjax::begin(); ?>
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -40,11 +44,36 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['class' => 'yii\grid\SerialColumn'],
 
                         'id',
-                        'user_id',
-                        'product_id',
+                        [
+                                'attribute' => 'user_id',
+                            'filter' => Html::activeDropDownList(
+                                    $searchModel,
+                                    'user_id',
+                                    \common\models\User::UserLists(),
+                                    ['class' => 'form-control', 'prompt' => '']
+                            ),
+                            'value' => function ($model) {
+                                 return $model->user->username;
+                            }
+                        ],
+                        [
+                                'attribute' => 'product_id',
+                            'filter' => Html::activeDropDownList(
+                                    $searchModel,
+                                    'product_id',
+                                    \common\models\Product::ProductList(),
+                                    ['class' => 'form-control', 'prompt' => '']
+                            ),
+                            'value' => function ($model) {
+                               return $model->product->name;
+                            }
+                        ],
                         'count',
                         [
                                 'class' => ActionColumn::className(),
+                                'template' => Yii::$app->user->identity->role === 'admin'
+                                        ? '{view} {update} {delete}'
+                                        : '{view}',
                                 'urlCreator' => function ($action, Cart $model, $key, $index, $column) {
                                     return Url::toRoute([$action, 'id' => $model->id]);
                                 }

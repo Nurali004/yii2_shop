@@ -4,12 +4,15 @@ namespace frontend\controllers;
 
 use backend\models\ProductSearch;
 use common\models\Category;
+use common\models\Customer;
 use common\models\Partner;
 use common\models\Product;
 use common\models\ProductImage;
 use common\models\Slider;
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use mdm\admin\models\form\ChangePassword;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\data\Pagination;
@@ -22,6 +25,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -37,16 +41,16 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'profile'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
                         'allow' => true,
+                        'actions' => ['login', 'signup'],
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
+                        'actions' => ['index', 'logout','profile', 'profile-update'],
                         'roles' => ['@'],
                     ],
                 ],
@@ -59,6 +63,7 @@ class SiteController extends Controller
             ],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -83,23 +88,6 @@ class SiteController extends Controller
 
         return $this->render('image', ['products' => $products, 'product_images' => $product_images]);
 
-
-    }
-
-    public function actionShop()
-    {
-
-
-
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-
-        return $this->render('shop', [
-            'searchModel' => $searchModel,
-
-            'dataProvider' => $dataProvider,
-
-            ]);
 
     }
 
@@ -196,7 +184,7 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+            return $this->redirect('/site/login');
         }
 
         return $this->render('signup', [
@@ -295,5 +283,70 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionChange($lang)
+    {
+
+        Yii::$app->language = $lang;
+        Yii::$app->session->set('lang', $lang);
+
+        return $this->goHome();
+
+    }
+
+    public function actionProfile()
+    {
+        $user = Yii::$app->user->identity;
+
+        $customer = Customer::find()->where(['user_id'=>$user->id])->one() ?? null;
+
+        return $this->render('profile', ['user' => $user
+        , 'customer' => $customer]);
+
+    }
+
+    public function actionProfileUpdate()
+    {
+        $user = User::findOne(Yii::$app->user->id);
+
+        if (Yii::$app->request->isPost) {
+
+            $user->load(Yii::$app->request->post());
+            if ($user->save(false)) {
+                Yii::$app->session->setFlash('success', 'Profile updated successfully.');
+
+                $this->redirect(['/site/profile']);
+
+            }
+
+        }
+
+    }
+
+    public function actionCustomerUpdate()
+    {
+
+        $customer = Customer::find()->where(['user_id'=>Yii::$app->user->identity->id])->one();
+        if (!isset($customer)) {
+            $customer = new Customer();
+        }
+
+        if (Yii::$app->request->isPost) {
+
+
+            $customer->imageFile = UploadedFile::getInstance($customer, 'imageFile');
+            if (!is_null($customer->imageFile)) {
+                $customer->upload();
+            }
+
+            $customer->user_id = Yii::$app->user->identity->id;
+            if ($customer->load(Yii::$app->request->post()) && $customer->save(false)) {
+                Yii::$app->session->setFlash('success', 'Customer updated successfully.');
+                $this->redirect(['/site/profile']);
+            }
+
+        }
+
     }
 }

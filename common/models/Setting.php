@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "setting".
@@ -21,6 +22,8 @@ use Yii;
 class Setting extends \yii\db\ActiveRecord
 {
     public $imageFile;
+
+
 
 
     /**
@@ -52,15 +55,17 @@ class Setting extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'email' => 'Email',
-            'phone_number' => 'Phone Number',
-            'logo_img' => 'Logo Img',
-            'site_name' => 'Site Name',
-            'description' => 'Description',
-            'facebook_url' => 'Facebook Url',
-            'telegram_url' => 'Telegram Url',
-            'instagram_url' => 'Instagram Url',
-            'youtube_url' => 'Youtube Url',
+            'email' => Yii::t('setting', 'Email'),
+            'phone_number' => Yii::t('setting', 'Phone'),
+            'logo_img' => Yii::t('setting', 'Logo'),
+            'imageFile' => Yii::t('partner', 'ImageFile'),
+            'site_name' => Yii::t('setting', 'Site Name'),
+            'description' => Yii::t('setting', 'Description'),
+            'facebook_url' => Yii::t('setting', 'Facebook Url'),
+            'telegram_url' => Yii::t('setting', 'Telegram Url'),
+            'instagram_url' => Yii::t('setting', 'Instagram Url'),
+            'youtube_url' => Yii::t('setting', 'Youtube Url'),
+
         ];
     }
 
@@ -76,6 +81,12 @@ class Setting extends \yii\db\ActiveRecord
         }else{
             return false;
         }
+
+    }
+
+    public static function SettingLists (){
+
+        return ArrayHelper::map(self::find()->all(),'id','site_name');
 
     }
 

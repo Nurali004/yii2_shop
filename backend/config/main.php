@@ -8,19 +8,54 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'on beforeRequest' => function ($event) {
+        // Retrieve the stored language preference
+        $language = Yii::$app->session->get('lang', 'en'); // Default to English if not found
+
+        // Set the application language
+        Yii::$app->language = $language;
+    },
     'modules' => [
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ],
         'admin' => [
             'class' => 'mdm\admin\Module',
 
+
             'layout' => 'left-menu',
             'mainLayout' => '@app/views/layouts/dashmix.php',
+            'menus' => [
+                'assignment' => [
+                    'label' => 'Grant Access',
 
-        ]
+                ],
+                'menu' => [
+                    'label' => 'Menus',
+                ]
+            ]
+
+        ],
+        'dynagrid' => [
+    'class' => '\kartik\dynagrid\Module',
+],
     ],
     'components' => [
+        'i18n' => [
+            'translations' => [
+
+                '*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                   // 'basePath' => '@common/messages',
+                    //'sourceLanguage' => 'en-US',
+
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
             'baseUrl' => '/admin',
@@ -51,10 +86,10 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-               'settings' => 'setting/index',
-                'settings/add' => 'setting/create',
-                'settings/<id:\d+>/view' => 'post/view',
-                'settings/<id:\d+>/update' => 'setting/update',
+               'settings' => 'setting/update',
+//                'settings/add' => 'setting/create',
+//                'settings/<id:\d+>/view' => 'post/view',
+//                'settings/<id:\d+>/update' => 'setting/update',
 
             ],
         ],

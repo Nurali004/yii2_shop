@@ -47,9 +47,9 @@ class Cart extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'product_id' => 'Product ID',
-            'count' => 'Count',
+            'user_id' => Yii::t('order', 'User ID'),
+            'product_id' => Yii::t('product-image', 'Product ID'),
+            'count' => Yii::t('cart', 'Count'),
         ];
     }
 

@@ -3,12 +3,17 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
+use common\models\Setting;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use yii\helpers\Url;
+
+$name = 'name_' . Yii::$app->language;
+$description = 'description_' . Yii::$app->language;
 
 \frontend\assets\FrontAsset::register($this);
 ?>
@@ -48,8 +53,9 @@ use yii\bootstrap5\NavBar;
                                             </g>
                                         </svg>
                                     </div>
+                                    <?php $setting = Setting::find()->one(); ?>
                                     <div class="text">
-                                        <span>olog.wetbise@mail.com</span>
+                                        <span><?= $setting->email ?></span>
                                     </div>
                                 </div>
                                 <div class="cta">
@@ -65,28 +71,36 @@ use yii\bootstrap5\NavBar;
                                         </svg>
                                     </div>
                                     <div class="text">
-                                        <span>+998992907704</span>
+                                        <span><?= $setting->phone_number ?></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="header-top-switcher">
+
+
                                 <div class="language">
-                                    <select>
-                                        <option data-display="English">English</option>
-                                        <option value="1">Arabic</option>
-                                        <option value="2">Aramaic</option>
-                                        <option value="4">Bangla</option>
-                                    </select>
+                                    <button type="button" class="nice-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Language
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="<?= Url::to(['/site/change', 'lang'=> 'en']) ?>">EN</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="<?= Url::to(['/site/change', 'lang'=> 'uz']) ?>">UZ</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="<?= Url::to(['/site/change', 'lang'=> 'ru']) ?>">RU</a></li>
+                                    </ul>
                                 </div>
+
                                 <div class="currency">
-                                    <select>
-                                        <option data-display="Currency">USD</option>
-                                        <option value="1">BDT</option>
-                                        <option value="2">SNG</option>
-                                        <option value="4">ERU</option>
-                                    </select>
+                                    <button type="button" class="nice-select" data-bs-toggle="dropdown" aria-expanded="false">
+                                        currency
+                                    </button>
+
                                 </div>
+
+
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -97,14 +111,15 @@ use yii\bootstrap5\NavBar;
                 <div class="d-none d-lg-block">
                     <nav class="menu-area d-flex align-items-center">
                         <div class="logo">
-                            <a href="/"><img src="/front/dist/images/logo/logo.png" alt="logo" /></a>
+                            <?php  $seting = Setting::find()->one(); ?>
+                            <a href="/"><img src="/<?= $seting->logo_img  ?>" alt="logo" width="80"  /></a>
                         </div>
 
                         <?php  $menuItems = [
                                 ['label' => 'Home', 'url' => ['/site/index']],
                                 ['label' => 'About', 'url' => ['/site/about']],
                                 ['label' => 'Contact', 'url' => ['/site/contact']],
-                                ['label' => 'Shop', 'url' => ['/site/shop']],
+                                ['label' => 'Shop', 'url' => ['/shop/image']],
 
                                 ['label' => 'Category',
                                         'items' => [
@@ -174,8 +189,10 @@ use yii\bootstrap5\NavBar;
                                         <span class="cart">3</span>
                                     </a>
                                 </li>
+                                <?php if (Yii::$app->user->isGuest): ?>
                                 <li>
-                                    <a href="/site/login"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+
+                                    <a href="<?= \yii\helpers\Url::to(['/site/login']) ?>"><svg xmlns="http://www.w3.org/2000/svg" width="18"
                                                                 height="20" viewBox="0 0 18 20">
                                             <g id="Account" transform="translate(1 1)">
                                                 <path id="Path_86" data-name="Path 86"
@@ -188,6 +205,22 @@ use yii\bootstrap5\NavBar;
                                             </g>
                                         </svg></a>
                                 </li>
+                                <?php  else: ?>
+                               <li>
+                                   <a href="<?= \yii\helpers\Url::to(['/site/profile']) ?>"><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                                                height="20" viewBox="0 0 18 20">
+                                           <g id="Account" transform="translate(1 1)">
+                                               <path id="Path_86" data-name="Path 86"
+                                                     d="M20,21V19a4,4,0,0,0-4-4H8a4,4,0,0,0-4,4v2"
+                                                     transform="translate(-4 -3)" fill="none" stroke="#000"
+                                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                               <circle id="Ellipse_9" data-name="Ellipse 9" cx="4" cy="4" r="4"
+                                                       transform="translate(4)" fill="#fff" stroke="#000"
+                                                       stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                           </g>
+                                       </svg></a>
+                               </li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </nav>
@@ -215,10 +248,7 @@ use yii\bootstrap5\NavBar;
                                 </svg>
                             </div>
                         </div>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="shop.html">Men</a></li>
-                        <li><a href="shop.html">Women</a></li>
-                        <li><a href="shop.html">Shop</a></li>
+
                         <li>
                             <a href="javascript:void(0)">Category
                                 <svg xmlns="http://www.w3.org/2000/svg" width="9.98" height="5.69"
@@ -326,8 +356,10 @@ use yii\bootstrap5\NavBar;
         </div>
     </header>
 
+
 <main>
     <div class="container">
+
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
@@ -362,10 +394,9 @@ use yii\bootstrap5\NavBar;
         <div class="row main-footer">
             <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                 <div class="main-footer-info">
-                    <img src="/front/dist/images/logo/white.png" alt="Logo" class="img-fluid">
+                    <img src="/<?= $seting->logo_img ?>" alt="Logo" class="img-fluid">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam molestie malesuada
-                        metus, non molestie ligula laoreet vitae. Ut et fringilla risus, vel.
+                        <?= $seting->description ?>
                     </p>
                 </div>
             </div>
@@ -374,7 +405,7 @@ use yii\bootstrap5\NavBar;
                     <h6>Company</h6>
                     <ul class="quicklink">
                         <li><a href="#">About</a></li>
-                        <li><a href="#">Help &amp; Support</a></li>
+                        <li><a href="<?= \yii\helpers\Url::to(['/support/create']) ?>">Help &amp; Support</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
                     </ul>
@@ -382,25 +413,26 @@ use yii\bootstrap5\NavBar;
             </div>
             <div class="col-lg-2 col-md-4 col-sm-6 col-12">
                 <div class="main-footer-quicklinks">
-                    <h6>Quick links</h6>
+                    <?php $categories =  \common\models\Category::find()->limit(3)->all(); ?>
+                    <h6>Categories</h6>
+                    <?php foreach ($categories as $cat): ?>
                     <ul class="quicklink">
-                        <li><a href="#">New Realease</a></li>
-                        <li><a href="#">Customize</a></li>
-                        <li><a href="#">Sale &amp; Discount</a></li>
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Women</a></li>
+                        <li><a href="#"><?= $cat->$name ?></a></li>
+
                     </ul>
+                    <?php endforeach ?>
                 </div>
             </div>
             <div class="col-lg-2 col-md-4 col-sm-6 col-12">
                 <div class="main-footer-quicklinks">
                     <h6>Account</h6>
+
                     <ul class="quicklink">
-                        <li><a href="#">Your Bag</a></li>
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="#">Order Completed</a></li>
-                        <li><a href="#">Log-out</a></li>
+                        <li><a href="<?= \yii\helpers\Url::to(['/shop/bag']) ?>">Your Bag</a></li>
+                        <li><a href="<?= \yii\helpers\Url::to(['site/profile']) ?>">Profile</a></li>
+                        <li><a href="<?= \yii\helpers\Url::to(['/site/logout']) ?>">Log-out</a></li>
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -408,13 +440,13 @@ use yii\bootstrap5\NavBar;
             <div class="col-lg-12">
                 <div class="copyright d-flex justify-content-between align-items-center">
                     <div class="copyright-text order-2 order-lg-1">
-                        <p>&copy; 2020. Design and Developed by <a href="#">Zakir Soft</a></p>
+                        <p>&copy; 2025. Design and Developed by <a href="#">Nurali Mavzurov</a></p>
                     </div>
                     <div class="copyright-links order-1 order-lg-2">
-                        <a href="#" class="ml-0"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="<?= $setting->facebook_url ?>" class="ml-0"><i class="fab fa-facebook-f"></i></a>
+                        <a href="<?= $setting->telegram_url ?>"><i class="fab fa-telegram"></i></a>
+                        <a href="<?= $setting->youtube_url ?>"><i class="fab fa-youtube"></i></a>
+                        <a href="<?= $setting->instagram_url ?>"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>

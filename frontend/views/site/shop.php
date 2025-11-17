@@ -16,12 +16,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row justify-content-center">
             <div class="search-wrapper">
                 <?php Pjax::begin(); ?>
-               <?php \yii\bootstrap5\ActiveForm::begin([]) ?>
+
 
                 <?= $this->render('_search', ['model' => $searchModel]); ?>
 
 
-                <?php \yii\bootstrap5\ActiveForm::end() ?>
+
 
 
                 <?php Pjax::end() ?>

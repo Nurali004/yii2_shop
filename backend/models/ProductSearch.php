@@ -18,7 +18,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'category_id', 'status', 'order'], 'integer'],
-            [['name', 'description', 'created_at', 'updated_at'], 'safe'],
+            [['name_'.\Yii::$app->language, 'description', 'created_at', 'updated_at'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -69,8 +69,12 @@ class ProductSearch extends Product
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'name_uz', $this->name_uz])
+            ->andFilterWhere(['like', 'name_ru', $this->name_ru])
+            ->andFilterWhere(['like', 'name_en', $this->name_en])
+            ->andFilterWhere(['like', 'description_uz', $this->description_uz])
+        ->andFilterWhere(['like', 'description_ru', $this->description_ru])
+        ->andFilterWhere(['like', 'description_en', $this->description_en]);
 
         return $dataProvider;
     }

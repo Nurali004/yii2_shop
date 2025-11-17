@@ -5,6 +5,8 @@
 
 use backend\assets\AppAsset;
 use common\widgets\Alert;
+use mdm\admin\components\MenuHelper;
+use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
@@ -36,7 +38,7 @@ use yii\bootstrap5\NavBar;
         <div class="bg-header-dark">
             <div class="content-header bg-white-5">
                 <!-- Logo -->
-                <a class="fw-semibold text-white tracking-wide" href="index.html">
+                <a class="fw-semibold text-white tracking-wide" href="<?= \yii\helpers\Url::to(['/']) ?>">
               <span class="smini-visible">
                 D<span class="opacity-75">x</span>
               </span>
@@ -98,8 +100,12 @@ use yii\bootstrap5\NavBar;
                         ['label' => 'Cart', 'url' => ['/cart/index']],
                         ['label' => 'ProductImage', 'url' => ['/product-image/index']],
                         ['label' => 'Slider', 'url' => ['/slider/index']],
+                        ['label' => 'Support', 'url' => ['/support/index']],
                         ['label' => 'Settings', 'url' => ['/setting/index']],
                 ];
+
+                $menuItems = MenuHelper::getAssignedMenu(Yii::$app->user->id);
+
                 if (Yii::$app->user->isGuest) {
                     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
                 }
@@ -144,6 +150,21 @@ use yii\bootstrap5\NavBar;
 
             <!-- Right Section -->
             <div class="space-x-1">
+
+                <!-- Example single danger button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Language
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="<?= \yii\helpers\Url::to(['/site/change', 'lang'=> 'en']) ?>">EN</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="<?= \yii\helpers\Url::to(['/site/change', 'lang'=> 'uz']) ?>">UZ</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="<?= \yii\helpers\Url::to(['/site/change', 'lang'=> 'ru']) ?>">RU</a></li>
+
+                    </ul>
+                </div>
                 <!-- User Dropdown -->
                 <div class="dropdown d-inline-block">
                     <button type="button" class="btn btn-alt-secondary" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -153,15 +174,17 @@ use yii\bootstrap5\NavBar;
                     </button>
                     <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
                         <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
-                            User Options
+                            <?= Yii::t('profile', 'User Options') ?>
                         </div>
                         <div class="p-2">
-                            <?= Html::a('<i class="far fa-fw fa-user me-1"></i> Profile', ['/site/profile'], ['class' => 'dropdown-item']) ?>
+
+
+                            <?= Html::a('<i class="far fa-fw fa-user me-1"></i>'. Yii::t('profile', 'Profile'), ['/site/profile'], ['class' => 'dropdown-item']) ?>
 
                             <!-- Toggle Side Overlay -->
                             <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
 
-                            <?= Html::a('<i class="far fa-fw fa-building me-1"></i> Settings', ['/site/setting'], ['class' => 'dropdown-item']) ?>
+                            <?= Html::a('<i class="far fa-fw fa-building me-1"></i>'. Yii::t('profile', 'Settings'), ['/settings'], ['class' => 'dropdown-item']) ?>
 
 
                             <!-- END Side Overlay -->
@@ -170,7 +193,7 @@ use yii\bootstrap5\NavBar;
 
                             echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
                                     . Html::submitButton(
-                                            ' <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i> Sign Out',
+                                            ' <i class="far fa-fw fa-arrow-alt-circle-left me-1"></i>'. Yii::t('profile', 'Sign Out'),
                                             ['class' => 'btn btn-link logout text-decoration-none']
                                     )
                                     . Html::endForm();
@@ -273,15 +296,25 @@ use yii\bootstrap5\NavBar;
         <div id="page-header-search" class="overlay-header bg-header-dark">
             <div class="bg-white-10">
                 <div class="content-header">
-                    <form class="w-100" action="be_pages_generic_search.html" method="POST">
+                    <?php $form = ActiveForm::begin([
+                            'action' => ['product/index'],
+                            'method' => 'get',
+                            'options' => [
+                                    'data-pjax' => 1,
+                                'class' => "w-100",
+                            ],
+
+                    ]); ?>
+
                         <div class="input-group">
                             <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                             <button type="button" class="btn btn-alt-primary" data-toggle="layout" data-action="header_search_off">
                                 <i class="fa fa-fw fa-times-circle"></i>
                             </button>
-                            <input type="text" class="form-control border-0" placeholder="Search or hit ESC.." id="page-header-search-input" name="page-header-search-input">
+
+                            <input type="text" class="form-control border-0" placeholder="Search or hit ESC.." id="page-header-search-input" name="ProductSearch[name]">
                         </div>
-                    </form>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>

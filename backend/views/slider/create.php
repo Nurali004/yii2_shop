@@ -5,13 +5,12 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Slider $model */
 
-$this->title = 'Create Slider';
-$this->params['breadcrumbs'][] = ['label' => 'Sliders', 'url' => ['index']];
+$this->title = Yii::t('slider', 'Create Slider');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('slider', 'Sliders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="slider-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
