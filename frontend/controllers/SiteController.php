@@ -88,19 +88,13 @@ class SiteController extends Controller
 
     public function actionShop()
     {
-
-
-
         $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('shop', [
             'searchModel' => $searchModel,
-
             'dataProvider' => $dataProvider,
-
-            ]);
-
+        ]);
     }
 
     /**

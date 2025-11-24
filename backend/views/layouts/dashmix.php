@@ -5,6 +5,7 @@
 
 use backend\assets\AppAsset;
 use common\widgets\Alert;
+use mdm\admin\components\MenuHelper;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
@@ -100,12 +101,14 @@ use yii\bootstrap5\NavBar;
                         ['label' => 'Slider', 'url' => ['/slider/index']],
                         ['label' => 'Settings', 'url' => ['/setting/index']],
                 ];
+
+
                 if (Yii::$app->user->isGuest) {
                     $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
                 }
                 echo Nav::widget([
-                        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-                        'items' => $menuItems,
+                    'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
+                    'items' => $menuItems,
                     'encodeLabels' => false,
 
                 ]);
