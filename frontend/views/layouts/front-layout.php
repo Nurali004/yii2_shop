@@ -169,7 +169,7 @@ $description = 'description_' . Yii::$app->language;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="cart.html"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                    <a href="<?= Url::to(['/cart/index'])?>"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                                              viewBox="0 0 22 22">
                                             <g id="Icon" transform="translate(-1524 -89)">
                                                 <ellipse id="Ellipse_2" data-name="Ellipse 2" cx="0.909" cy="0.952"
@@ -186,7 +186,7 @@ $description = 'description_' . Yii::$app->language;
                                                       stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
                                             </g>
                                         </svg>
-                                        <span class="cart">3</span>
+                                        <span class="cart"><?= \common\models\Cart::find()->count('*') ?></span>
                                     </a>
                                 </li>
                                 <?php if (Yii::$app->user->isGuest): ?>
@@ -306,7 +306,7 @@ $description = 'description_' . Yii::$app->language;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="cart.html">
+                                    <a href="<?= Url::to(['/cart/index']) ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                              viewBox="0 0 22 22">
                                             <g id="Icon" transform="translate(-1524 -89)">
@@ -328,7 +328,7 @@ $description = 'description_' . Yii::$app->language;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="account.html">
+                                    <a href="<?= Url::to(['/site/profile']) ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20"
                                              viewBox="0 0 18 20">
                                             <g id="Account" transform="translate(1 1)">

@@ -109,7 +109,7 @@ $this->title = 'My Yii Application';
                         <a href="/"><?= $product->$name ?></a>
                         <span><?= $product->price ?></span>
                         <div class="product-pricelist-selector-button">
-                            <a class="btn cart-bg " href="#">Add to cart
+                            <a class="btn cart-bg " href="<?= Url::to(['/cart/create', 'product_id'=> $product->id]) ?>">Add to cart
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                             </a>
 
@@ -174,12 +174,12 @@ $this->title = 'My Yii Application';
             <div class="col-lg-3 col-md-4 col-sm-6 col-6">
                 <div class="productcategory text-center">
                     <div class="productcategory-img">
-                        <a href="#"><img src="/<?= $category->img  ?>" alt="<?= $category->img ?>" width="150" height="150"></a>
+                        <a href="<?= Url::to(['/category/view', 'id' => $category->id] ) ?>"><img src="/<?= $category->img  ?>" alt="<?= $category->img ?>" width="150" height="150"></a>
                     </div>
                     <div class="productcategory-text">
                         <a href="#">
                             <h6><?= $category->$name ?></h6>
-                            <span>12</span>
+                            <span><?= \common\models\Category::find()->count('pid') ?></span>
                         </a>
                     </div>
                 </div>
@@ -190,7 +190,7 @@ $this->title = 'My Yii Application';
         <div class="row">
             <div class="col-sm-12">
                 <div class="features-morebutton text-center">
-                    <a class="btn bt-glass" href="#">View All Categorys</a>
+                    <a class="btn bt-glass" href="<?= Url::to(['/shop/image']) ?>">View All Categorys</a>
                 </div>
             </div>
         </div>

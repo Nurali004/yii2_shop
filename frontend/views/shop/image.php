@@ -130,15 +130,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <section class="pagination">
+
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="d-flex justify-content-center">
             <div class="pagination-group">
+
 
                 <?=
 
                 \yii\bootstrap5\LinkPager::widget([
                     'pagination' => $dataProvider->pagination,
-                    'options' => ['class' => 'cdp_i'],
+                        'options' => ['class' => 'pagination'], // ul class
+                        'linkContainerOptions' => ['class' => 'page-item'],
+                        'linkOptions' => ['class' => 'page-link'],
 
                 ])
 

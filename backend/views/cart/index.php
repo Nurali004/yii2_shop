@@ -10,6 +10,8 @@ use yii\widgets\Pjax;
 /** @var backend\models\CartSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+$name = 'name_'.Yii::$app->language;
+
 $this->title = Yii::t('cart', 'Carts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -64,8 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     \common\models\Product::ProductList(),
                                     ['class' => 'form-control', 'prompt' => '']
                             ),
-                            'value' => function ($model) {
-                               return $model->product->name;
+                            'value' => function ($model) use($name) {
+                               return $model->product->$name;
                             }
                         ],
                         'count',
