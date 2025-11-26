@@ -12,10 +12,10 @@ use yii\filters\VerbFilter;
 /**
  * SupportController implements the CRUD actions for Support model.
  */
-class SupportController extends Controller
+class SupportController extends \frontend\base\Controller
 {
 
-    public $layout = 'front-layout';
+    public $layout = 'shop-layout';
     /**
      * @inheritDoc
      */
@@ -90,8 +90,8 @@ class SupportController extends Controller
             ")
                 ->send();
 
-            Yii::$app->session->setFlash('success', 'Support request sent successfully.');
-            return $this->redirect(['create']);
+            Yii::$app->session->setFlash('support', 'Support request sent successfully.');
+            return $this->redirect(['/site/index']);
         }
 
         return $this->render('create', [

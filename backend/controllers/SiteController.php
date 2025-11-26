@@ -29,7 +29,7 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'change', 'profile'],
+                        'actions' => ['login', 'error', 'change', 'profile', 'update-profile'],
                         'allow' => true,
                     ],
                     [
@@ -131,7 +131,6 @@ class SiteController extends Controller
 
         if ($user->load(Yii::$app->getRequest()->post()) && $user->save()) {
             Yii::$app->session->setFlash('success', Yii::t('rbac-admin', 'Your information has been changed'));
-             return  $this->redirect(['/site/profile']);
 
 
         }
@@ -141,5 +140,21 @@ class SiteController extends Controller
             'user' => $user,
         ]);
 
+    }
+
+    public function actionUpdateProfile()
+    {
+
+        $user = Customer::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
+
+        if ($user->load(Yii::$app->getRequest()->post()) && $user->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('rbac-admin', 'Your information has been changed'));
+
+
+        }
+
+        return $this->renderAjax('update-profile', [
+            'user' => $user,
+        ]);
     }
 }

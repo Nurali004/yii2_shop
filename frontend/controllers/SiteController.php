@@ -26,9 +26,9 @@ use frontend\models\ContactForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends \frontend\base\Controller
 {
-    public $layout = 'front-layout';
+    public $layout = 'shop-layout';
     /**
      * {@inheritdoc}
      */
@@ -104,12 +104,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
         $categories = Category::find()->all();
-        $products = Product::find()->limit(9)->all();
-        $sliders = Slider::find()->orderBy(['order'=> SORT_DESC])->all();
-        $product_images = ProductImage::find()->where(['product_id'=> 'id'])->limit(6)->all();
-        $brands = Partner::find()->orderBy(['order'=> SORT_DESC])->all();
-        return $this->render('index', ['brands' => $brands, 'product_images' => $product_images, 'sliders' => $sliders, 'categories' => $categories, 'products' => $products]);
+        $products = Product::find()->limit(8)->all();
+        $sliders = Slider::find()->all();
+
+        return $this->render('index', ['categories' => $categories, 'products' => $products, 'sliders' => $sliders]);
     }
 
     /**

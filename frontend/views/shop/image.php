@@ -14,145 +14,231 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1><?= Html::encode($this->title) ?></h1>
 
 
-<section class="search">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="search-wrapper">
-                <?php Pjax::begin(); ?>
 
 
-                <?= $this->render('_search', ['model' => $searchModel]); ?>
-
-
-
-
-                <?php Pjax::end() ?>
-
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section class="categoryitem">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="categoryitem-wrapper">
-
-                <div class="categoryitem-wrapper-itembox">
-
-                </div>
-                <div class="categoryitem-wrapper-price">
-                    <h6>Price</h6>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="populerproduct bg-white p-0 shop-product">
-    <div class="container">
-        <div class="row">
-            <?php foreach ($dataProvider->getModels() as $product): ?>
-                <div class="col-md-4 col-sm-6">
-                    <div class="product-item">
-                        <div class="product-item-image">
-                            <a href="<?= Url::to(['/shop/shop', 'id'=> $product->id]) ?>"><img src="/<?= $product->img ?>" alt="Product Name" class="img-fluid"></a>
-                            <div class="cart-icon">
-                                <a href="#"><i class="far fa-heart"></i></a>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16.75" height="16.75" viewBox="0 0 16.75 16.75">
-                                        <g id="Your_Bag" data-name="Your Bag" transform="translate(0.75)">
-                                            <g id="Icon" transform="translate(0 1)">
-                                                <ellipse id="Ellipse_2" data-name="Ellipse 2" cx="0.682" cy="0.714" rx="0.682" ry="0.714" transform="translate(4.773 13.571)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></ellipse>
-                                                <ellipse id="Ellipse_3" data-name="Ellipse 3" cx="0.682" cy="0.714" rx="0.682" ry="0.714" transform="translate(12.273 13.571)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></ellipse>
-                                                <path id="Path_3" data-name="Path 3" d="M1,1H3.727l1.827,9.564a1.38,1.38,0,0,0,1.364,1.15h6.627a1.38,1.38,0,0,0,1.364-1.15L16,4.571H4.409" transform="translate(-1 -1)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                </a>
-                            </div>
+<div class="container-fluid fruite py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Fresh fruits shop</h1>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="row g-4">
+                    <div class="col-xl-3">
+                        <div class="input-group w-100 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                         </div>
-                        <div class="product-item-info">
-                            <a href="/"><?= $product->$name ?></a>
-                            <span><?= $product->price ?></span>
-                            <div class="product-pricelist-selector-button">
-                                <a class="btn cart-bg " href="#">Add to cart
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                                </a>
-
-                                <div class="product-pricelist-selector-button-item">
-                                    <div class="shipping">
-                                        <div class="icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="21.4" height="17.937" viewBox="0 0 21.4 17.937">
-                                                <g id="Truck_Icon" data-name="Truck Icon" transform="translate(-0.8 -3.8)">
-                                                    <path id="Path_14" data-name="Path 14" d="M1.5,4.5H15.112V16.3H1.5Z" fill="none" stroke="#335aff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"></path>
-                                                    <path id="Path_15" data-name="Path 15" d="M24,12h3.63l2.722,2.722V19.26H24Z" transform="translate(-8.852 -3)" fill="none" stroke="#335aff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"></path>
-                                                    <path id="Path_16" data-name="Path 16" d="M9.037,26.269A2.269,2.269,0,1,1,6.769,24a2.269,2.269,0,0,1,2.269,2.269Z" transform="translate(-1.185 -7.5)" fill="none" stroke="#335aff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"></path>
-                                                    <path id="Path_17" data-name="Path 17" d="M28.537,26.269A2.269,2.269,0,1,1,26.269,24,2.269,2.269,0,0,1,28.537,26.269Z" transform="translate(-8.852 -7.5)" fill="none" stroke="#335aff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"></path>
-                                                </g>
-                                            </svg>
-
-                                        </div>
-                                        <p>Free Shipping Cast</p>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-xl-3">
+                        <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                            <label for="fruits">Default Sorting:</label>
+                            <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
+                                <option value="volvo">Nothing</option>
+                                <option value="saab">Popularity</option>
+                                <option value="opel">Organic</option>
+                                <option value="audi">Fantastic</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Categories</h4>
+                                    <ul class="list-unstyled fruite-categorie">
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Apples</a>
+                                                <span>(3)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Oranges</a>
+                                                <span>(5)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Strawbery</a>
+                                                <span>(2)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Banana</a>
+                                                <span>(8)</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="#"><i class="fas fa-apple-alt me-2"></i>Pumpkin</a>
+                                                <span>(5)</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4 class="mb-2">Price</h4>
+                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
+                                    <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Additional</h4>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
+                                        <label for="Categories-1"> Organic</label>
                                     </div>
-                                    <div class="delivery">
-                                        <div class="icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="17.5" viewBox="0 0 17.5 17.5">
-                                                <g id="Icon" transform="translate(-2.25 -2.25)">
-                                                    <path id="Path_20" data-name="Path 20" d="M19,11a8,8,0,1,1-8-8A8,8,0,0,1,19,11Z" fill="none" stroke="#335aff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                    <path id="Path_21" data-name="Path 21" d="M18,9v4.8l3.2,1.6" transform="translate(-7 -2.8)" fill="none" stroke="#335aff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                                                </g>
-                                            </svg>
-                                        </div>
-                                        <p>3 Days Delivery Time</p>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
+                                        <label for="Categories-2"> Fresh</label>
                                     </div>
-                                    <div class="cash">
-                                        <div class="icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16">
-                                                <path id="Icon" d="M14.863,11.522c-2.23-.524-2.947-1.067-2.947-1.911,0-.969.992-1.644,2.652-1.644,1.749,0,2.4.756,2.456,1.867H19.2a3.655,3.655,0,0,0-3.153-3.387V4.5H13.095V6.42c-1.906.373-3.438,1.493-3.438,3.209,0,2.053,1.876,3.076,4.617,3.671,2.456.533,2.947,1.316,2.947,2.142,0,.613-.481,1.591-2.652,1.591-2.024,0-2.819-.818-2.927-1.867H9.48c.118,1.947,1.729,3.04,3.615,3.4V20.5h2.947V18.589c1.916-.329,3.438-1.333,3.438-3.156C19.48,12.909,17.093,12.047,14.863,11.522Z" transform="translate(-9.48 -4.5)" fill="#335aff"></path>
-                                            </svg>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
+                                        <label for="Categories-3"> Sales</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
+                                        <label for="Categories-4"> Discount</label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
+                                        <label for="Categories-5"> Expired</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4 class="mb-3">Featured products</h4>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                        <img src="img/featur-1.jpg" class="img-fluid rounded" alt="">
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-2">Big Banana</h6>
+                                        <div class="d-flex mb-2">
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star"></i>
                                         </div>
-                                        <p>Cash on Delivery</p>
+                                        <div class="d-flex mb-2">
+                                            <h5 class="fw-bold me-2">2.99 $</h5>
+                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                        <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-2">Big Banana</h6>
+                                        <div class="d-flex mb-2">
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="d-flex mb-2">
+                                            <h5 class="fw-bold me-2">2.99 $</h5>
+                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
+                                        <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-2">Big Banana</h6>
+                                        <div class="d-flex mb-2">
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star text-secondary"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="d-flex mb-2">
+                                            <h5 class="fw-bold me-2">2.99 $</h5>
+                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center my-4">
+                                    <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="position-relative">
+                                    <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
+                                    <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
+                                        <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-9">
+                        <div class="row g-4 justify-content-center">
+                            <?php foreach ($dataProvider->getModels() as $product): ?>
+                                <div class="col-md-6 col-lg-6 col-xl-4 product-itemm" data-key="<?= $product->id ?>">
+
+                                <div class="rounded position-relative fruite-item">
+                                    <div class="fruite-img">
+                                        <img src="/<?= $product->img ?>" class="img-fluid w-100 rounded-top" alt="">
+                                    </div>
+                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"><?= $product->category->name_uz ?></div>
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+
+                                        <p><?= $product->name_uz ?></p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0"><?= $product->price ?></p>
+                                            <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>Add to Cart', ['cart/create', 'id' => $product->id],
+                                                    [
+                                                            'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
+
+
+                                                    ],
+                                            ) ?>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php endforeach; ?>
+
+                            <div class="col-12">
+                                <div class="pagination d-flex justify-content-center mt-5">
+                                    <?=
+                                   \yii\bootstrap5\LinkPager::widget([
+                                           'pagination' => $dataProvider->pagination,
+                                       'options' =>[
+                                               'tag' => false,
+                                       ],
+
+
+                                       'class' => 'rounded',
+                                   ])
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            <?php endforeach; ?>
-
-        </div>
-    </div>
-</section>
-
-
-<section class="pagination">
-
-    <div class="container">
-        <div class="d-flex justify-content-center">
-            <div class="pagination-group">
-
-
-                <?=
-
-                \yii\bootstrap5\LinkPager::widget([
-                    'pagination' => $dataProvider->pagination,
-                        'options' => ['class' => 'pagination'], // ul class
-                        'linkContainerOptions' => ['class' => 'page-item'],
-                        'linkOptions' => ['class' => 'page-link'],
-
-                ])
-
-                ?>
-
             </div>
-
         </div>
     </div>
-</section>
+</div>
 
 
 

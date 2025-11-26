@@ -7,55 +7,64 @@ use common\models\Product;
 use Yii;
 use yii\web\Controller;
 
-class CartController extends Controller
+
+
+class CartController extends \frontend\base\Controller
 {
-    public $layout = 'front-layout';
+//    public $enableCsrfValidation = false;
+    public $layout = 'shop-layout';
 
     public function actionIndex(){
-        $user_id = Yii::$app->user->id;
-        $products = Cart::find()->where(['user_id'=>$user_id])->all();
-        foreach ($products as $product){
+        $name = 'name_' . Yii::$app->language;
 
-        $product_img = Product::find()->where(['id'=>$product->product_id])->all();
-        }
+        $cartItems = Cart::findBySql("SELECT
+    p.id,
+    p.name_uz,
+    p.img,
+    p.price,
+
+    c.count,
+    c.count * p.price AS total_price
+
+FROM cart c
+LEFT JOIN product p ON c.product_id = p.id
+WHERE c.user_id = :user_id; ",
+            [':user_id' => Yii::$app->user->identity->id])->asArray()->all();
 
         return $this->render('index', [
-            'products' => $products,
-            'product_img' => $product_img,
-            
+            'cartItems' => $cartItems,
         ]);
     }
 
-    public function actionCreate($product_id)
+    public function actionCreate()
     {
-        $user_id = Yii::$app->user->id;
-        $cart = Cart::find()->where(['user_id'=>$user_id, 'product_id' => $product_id])->one();
-        if($cart){
-            $cart->count += 1;
-            $cart->save();
-        }else{
-            $cart = new Cart();
-            $cart->product_id = $product_id;
-            $cart->count = 1;
-            $cart->user_id = $user_id;
-            if($cart->save()){
-                Yii::$app->session->setFlash('success', 'Product added to cart successfully!');
-                return $this->redirect(['index']);
+        $id = Yii::$app->request->post('id');
+        $product = Product::findOne($id);
+        if (!empty($product)) {
+            $cartItem = Cart::findOne(['user_id' => Yii::$app->user->identity->id, 'product_id' => $id]);
+            if (!empty($cartItem)) {
+                $cartItem->count++;
+            }else{
+                $cartItem = new Cart();
+                $cartItem->user_id = Yii::$app->user->identity->id;
+                $cartItem->product_id = $id;
+                $cartItem->count = 1;
             }
+
+            $cartItem->save();
+
+
         }
-        return false;
-        
+
+
     }
 
-    public function actionDelete($product_id)
+    public function actionDelete($id)
     {
-        $user_id = Yii::$app->user->id;
-        $cart = Cart::find()->where(['user_id'=>$user_id, 'product_id' => $product_id])->one();
-        if($cart){
-            $cart->delete();
+        $cartItem = Cart::findOne(['user_id' => Yii::$app->user->identity->id, 'product_id' => $id]);
+        if (!empty($cartItem)) {
+            $cartItem->delete();
         }
-        return $this->redirect(['index']);
-
-    }
-
+        return $this->redirect(['cart/index']);
+  }
 }

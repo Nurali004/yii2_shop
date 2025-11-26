@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="card">
+<div class="card" style="margin-top: 150px">
     <div class="card-header">
         Support Page
     </div>
@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
             <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col-6">
 
                     <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
@@ -29,15 +29,6 @@ use yii\widgets\ActiveForm;
                     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-6">
-
-
-                </div>
-
-            </div>
-
 
 
             <?= $form->field($model, 'description')->widget(TinyMce::className(), [
@@ -73,7 +64,7 @@ use yii\widgets\ActiveForm;
             ]);?>
 
 
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
             </div>
 
