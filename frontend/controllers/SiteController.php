@@ -297,6 +297,7 @@ class SiteController extends \frontend\base\Controller
 
     public function actionProfile()
     {
+        //dddd
         $user = Yii::$app->user->identity;
 
         $customer = Customer::find()->where(['user_id'=>$user->id])->one() ?? null;
