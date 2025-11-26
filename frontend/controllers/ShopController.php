@@ -8,9 +8,9 @@ use common\models\ProductImage;
 use Yii;
 use yii\web\Controller;
 
-class ShopController extends Controller
+class ShopController extends \frontend\base\Controller
 {
-    public $layout = 'front-layout';
+    public $layout = 'shop-layout';
     public function actionImage(){
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
@@ -18,7 +18,6 @@ class ShopController extends Controller
 
         return $this->render('image', [
             'searchModel' => $searchModel,
-
             'dataProvider' => $dataProvider,
 
         ]);

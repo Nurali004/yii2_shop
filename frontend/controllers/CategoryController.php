@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use common\models\Category;
 use yii\web\Controller;
 
-class CategoryController extends Controller
+class CategoryController extends \frontend\base\Controller
 {
     public function actionView($id)
     {

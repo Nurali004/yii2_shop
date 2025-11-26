@@ -26,6 +26,7 @@ return [
         ],
     ],
     'components' => [
+
         'i18n' => [
             'translations' => [
                 '*' => [
@@ -64,7 +65,16 @@ return [
             'rules' => [],
         ],
         'assetManager' => [
+
             'bundles' => [
+                'yii\bootstrap5\BootstrapAsset' => [
+                    'sourcePath' => null,   // bootstrap.css yuklanmasin
+                    'css' => [],
+                ],
+                'yii\bootstrap5\BootstrapPluginAsset' => [
+                    'sourcePath' => null,   // bootstrap.js yuklanmasin
+                    'js' => [],
+                ],
                 'kartik\form\ActiveFormAsset' => [
                     'bsDependencyEnabled' => true,
                 ],

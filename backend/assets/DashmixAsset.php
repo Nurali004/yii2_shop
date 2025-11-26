@@ -20,7 +20,9 @@ class DashmixAsset extends AssetBundle
 
         'dashmix/js/dashmix.app.min.js',
         'dashmix/js/plugins/jquery-validation/jquery.validate.js',
-        'dashmix/js/pages/op_auth_signin.min.js'
+        'dashmix/js/pages/op_auth_signin.min.js',
+        'js/main.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
