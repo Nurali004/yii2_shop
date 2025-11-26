@@ -11,73 +11,106 @@ use yii\widgets\Pjax;
 /** @var backend\models\ProductSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Products';
+$this->title = Yii::t('product', 'Products');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-index">
-
-    <?php if (Yii::$app->user->can('admin')): ?>
-
-        <p>
-            <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
-
-    <?php endif; ?>
 
 
+    <div class="block block-rounded">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Table</h3>
+            <div class="block-options">
+                <div class="block-options-item">
+                    <code>.table</code>
+                </div>
+            </div>
+        </div>
+        <div class="block-content">
 
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'pager' => [
-                'class' => yii\bootstrap5\LinkPager::class,
+                <p>
+                    <?= Html::a(Yii::t('product', 'Create Product'), ['create'], ['class' => 'btn btn-success']) ?>
+                </p>
 
 
-],
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'name',
-          //  'description:ntext',
-            'price',
-                [
-                        'attribute' => 'img',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return "<img src='/$model->img' alt='$model->img' width='100'>";
-                        }
-                ],
 
-                [
-                        'attribute' => 'category_id',
-                        'filter' => Html::activeDropDownList(
-                                $searchModel,
-                                'category_id',
-                                Category::CategoryList(),
-                                ['class' => 'form-control', 'prompt' => '']
-                        ),
-                        'value' => function ($model) {
-                            return $model->category->name ?? null;
-                        }
-                ],
-            //'status',
-            //'order',
-            //'created_at',
-            //'updated_at',
-            [
-                'class' => ActionColumn::class,
-//                'template'=> Yii::$app->user->can('admin') ? '{update} {delete}' : '{view}',
-                'urlCreator' => function ($action, Product $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
 
-    <?php Pjax::end(); ?>
+            <?php Pjax::begin(); ?>
+            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-</div>
+            <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'pager' => [
+                            'class' => yii\bootstrap5\LinkPager::class,
+
+
+                    ],
+                    'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+
+                            'id',
+                            'name_'.Yii::$app->language,
+
+
+
+                            'price',
+                            [
+                                    'attribute' => 'img',
+                                    'format' => 'html',
+                                    'value' => function ($model) {
+                                        return "<img src='/$model->img' alt='$model->img' width='100'>";
+                                    }
+                            ],
+
+                            [
+                                    'attribute' => 'category_id',
+                                    'filter' => Html::activeDropDownList(
+                                            $searchModel,
+                                            'category_id',
+                                            Category::CategoryList(),
+                                            ['class' => 'form-control', 'prompt' => '']
+                                    ),
+                                    'value' => function ($model) {
+                                        return $model->category->name ?? null;
+                                    }
+                            ],
+//                        [
+//                                'attribute' => 'description',
+//                                'format' => 'html',
+//
+//],
+                        [
+                                'attribute' => 'status',
+                            'value' => function ($model) {
+                             return $model->status ? Yii::t('product', 'Active') : Yii::t('product', 'Inactive');
+                            }
+
+                        ],
+                        [
+                                'attribute' => 'order',
+                            'value' => function ($model) {
+                             return $model->order ? Yii::t('product', 'Faol') : Yii::t('product', 'Faol Emas');
+                            }
+                        ],
+
+                        //'updated_at',
+                            [
+                                    'class' => ActionColumn::class,
+                                    'template' => Yii::$app->user->identity->role === 'admin'
+                                            ? '{view} {update} {delete}'
+                                            : '{view} {update}',
+//
+                                    'urlCreator' => function ($action, Product $model, $key, $index, $column) {
+                                        return Url::toRoute([$action, 'id' => $model->id]);
+                                    }
+                            ],
+                    ],
+            ]); ?>
+
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+
+

@@ -1,16 +1,17 @@
 <?php
 
+$name = 'name_' . Yii::$app->language;
 use common\models\Category;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var backend\models\CategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Categories';
+$this->title = Yii::t('category', 'Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -25,9 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="block-content">
-        <p>
-            <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
+        <?php if (Yii::$app->user->can('admin')): ?>
+
+            <p>
+                <?= Html::a(Yii::t('category','Create Category'), ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+
+        <?php endif; ?>
 
         <?php Pjax::begin(); ?>
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -41,17 +46,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         'id',
                         [
                                 'attribute' => 'pid',
-                                'filter' => Html::activeDropDownList(
-                                        $searchModel,
-                                        'pid',
-                                        Category::CategoryList(),
-                                        ['class' => 'form-control', 'prompt' => '']
-                                ),
-                                'value' => function ($model) {
-                                    return $model->p->name ?? null;
-                                }
+                                'filter' => \yii\helpers\ArrayHelper::map(\common\models\Category::find()->asArray()->all(), 'id', $name),
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filterWidgetOptions' => [
+                                    'pluginOptions' => ['allowClear' => true],
+                                'options' => ['prompt' => Yii::t('category', 'Select Category')],
+                            ],
+                                'value' => function ($model) use ($name) {
+                                    return $model->p->$name ?? $model->p->$name ?? null;
+                                },
                         ],
-                        'name',
+
+                        [
+                                'attribute' => 'name'.'_'.Yii::$app->language,
+
+                        ],
+
                         [
                                 'attribute' => 'img',
                                 'format' => 'html',
@@ -59,9 +69,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return "<img src='/$model->img' alt='$model->img' width='100'>";
                                 }
                         ],
-                        'order',
+                        [
+                            'attribute' => 'order',
+
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                if ($model->order == 1) {
+                                    return Yii::t('category', 'Faol');
+                                }
+                                return Yii::t('category', 'Faol emas');
+                            }
+
+
+                        ],
                         [
                                 'class' => ActionColumn::class,
+                                'template' => Yii::$app->user->identity->role === 'admin'
+                                        ? '{view} {update} {delete}'
+                                        : '{view}',
                                 'urlCreator' => function ($action, Category $model, $key, $index, $column) {
                                     return Url::toRoute([$action, 'id' => $model->id]);
                                 }

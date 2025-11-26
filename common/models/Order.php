@@ -50,11 +50,11 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'address' => 'Address',
-            'phone' => 'Phone',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'user_id' => Yii::t('order', 'User ID'),
+            'address' => Yii::t('order', 'Address'),
+            'phone' => Yii::t('order', 'Phone'),
+            'created_at' => Yii::t('order', 'Created At'),
+            'updated_at' => Yii::t('order', 'Updated At'),
         ];
     }
 

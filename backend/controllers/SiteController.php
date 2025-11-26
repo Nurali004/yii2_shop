@@ -2,7 +2,9 @@
 
 namespace backend\controllers;
 
+use common\models\Customer;
 use common\models\LoginForm;
+use mdm\admin\models\form\ChangePassword;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -14,6 +16,7 @@ use yii\web\Response;
  */
 class SiteController extends Controller
 {
+    public $layout = 'dashmix';
 
 
     /**
@@ -26,7 +29,7 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'change', 'profile'],
                         'allow' => true,
                     ],
                     [
@@ -103,5 +106,40 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionChange($lang)
+    {
+        Yii::$app->language = $lang;
+        Yii::$app->session->set('lang', $lang);
+
+
+        return $this->goHome();
+
+
+    }
+
+    public function actionProfile()
+    {
+
+        $model = new ChangePassword();
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->change()) {
+            return $this->goHome();
+        }
+
+        $user = Customer::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
+
+        if ($user->load(Yii::$app->getRequest()->post()) && $user->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('rbac-admin', 'Your information has been changed'));
+             return  $this->redirect(['/site/profile']);
+
+
+        }
+
+        return $this->render('profile', [
+            'model' => $model,
+            'user' => $user,
+        ]);
+
     }
 }

@@ -6,6 +6,8 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\debug\models\search\Profile;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -59,6 +61,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username', 'email'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
@@ -230,5 +233,18 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function is_User(){
         return $this->role === self::ROLE_USER ? true : false;
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, ['user_id' => 'id']);
+
+
+    }
+
+    public static function UserLists()
+    {
+        return ArrayHelper::map(User::find()->all(), 'id', 'username');
+
     }
 }

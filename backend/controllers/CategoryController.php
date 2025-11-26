@@ -53,6 +53,7 @@ class CategoryController extends Controller
     {
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination->pageSize = 5;
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -135,7 +135,7 @@ class ProductController extends Controller
 
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
 
-            if (!is_null($model->imageFiles)) {
+            if (!empty($model->imageFiles)) {
                $model->uploads($id);
             }
 

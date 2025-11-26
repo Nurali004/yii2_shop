@@ -2,8 +2,10 @@
 
 namespace backend\controllers;
 
+use backend\models\ProductSearch;
 use common\models\Cart;
 use backend\models\CartSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -39,8 +41,12 @@ class CartController extends Controller
      */
     public function actionIndex()
     {
+        $user_id = Yii::$app->user->identity->id;
+
         $searchModel = new CartSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['user_id' => $user_id]);
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -66,20 +72,17 @@ class CartController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($product_id = null)
     {
         $model = new Cart();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('create', [
             'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+
         ]);
     }
 

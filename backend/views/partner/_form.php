@@ -1,5 +1,6 @@
 <?php
 
+use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,15 +13,33 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
+    <div class="row">
+        <div class="col-6">
+
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-6">
+            <?= $form->field($model, 'order')->dropDownList([
+                    0 => Yii::t('partner', 'Faol Emas'),
+                    1 => Yii::t('partner', 'Faol'),
+            ]) ?>
 
-    <?= $form->field($model, 'imageFile')->fileInput(['accept' => 'image/*', 'class'=>'form-control']) ?>
 
-    <?= $form->field($model, 'order')->textInput() ?>
+        </div>
+    </div>
 
-    <div class="form-group">
+    <?= $form->field($model, 'imageFile')->widget(FileInput::classname(), [
+            'options' => ['accept' => 'image/*'],
+    ]); ?>
+
+
+    <div class="form-group mt-3">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
+
+
+
+
 
     <?php ActiveForm::end(); ?>
 

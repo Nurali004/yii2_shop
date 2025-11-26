@@ -17,8 +17,8 @@ class CustomerSearch extends Customer
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
-            [['f_name', 'l_name', 'phone', 'address'], 'safe'],
+            [['id'], 'integer'],
+            [['f_name', 'l_name', 'phone', 'address', 'user_id'], 'safe'],
         ];
     }
 
@@ -47,7 +47,9 @@ class CustomerSearch extends Customer
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+
         ]);
+        $query->leftJoin('user', 'user.id = customer.user_id');
 
         $this->load($params, $formName);
 
@@ -60,12 +62,13 @@ class CustomerSearch extends Customer
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
+
         ]);
 
         $query->andFilterWhere(['like', 'f_name', $this->f_name])
             ->andFilterWhere(['like', 'l_name', $this->l_name])
             ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'user.username', $this->user_id])
             ->andFilterWhere(['like', 'address', $this->address]);
 
         return $dataProvider;

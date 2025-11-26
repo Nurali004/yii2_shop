@@ -5,13 +5,11 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Cart $model */
 
-$this->title = 'Create Cart';
-$this->params['breadcrumbs'][] = ['label' => 'Carts', 'url' => ['index']];
+$this->title = Yii::t('cart', 'Create Cart');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cart', 'Carts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cart-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

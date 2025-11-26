@@ -1,5 +1,6 @@
 <?php
 
+use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,19 +13,27 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <div class="row">
+        <div class="col-6">
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'user_id')->dropDownList(
+            ['prompt' => 'Select User'],
+            \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username')
+    ) ?>
+        </div>
+        <div class="col-6">
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <div class="form-group">
+    <div class="form-group mt-3">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
+
+
 
     <?php ActiveForm::end(); ?>
 

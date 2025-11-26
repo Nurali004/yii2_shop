@@ -48,8 +48,9 @@ class ProductImage extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'image' => 'Image',
-            'product_id' => 'Product ID',
+            'image' => Yii::t('partner', 'Img'),
+            'product_id' => Yii::t('product-image', 'Product ID'),
+            'imageFile' => Yii::t('partner', 'ImageFile'),
         ];
     }
 

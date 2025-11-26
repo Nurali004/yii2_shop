@@ -10,45 +10,72 @@ use yii\widgets\Pjax;
 /** @var backend\models\PartnerSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Partners';
+$this->title = Yii::t('partner', 'Partners');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="partner-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Partner', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="block block-rounded">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Table</h3>
+            <div class="block-options">
+                <div class="block-options-item">
+                    <code>.table</code>
+                </div>
+            </div>
+        </div>
+        <div class="block-content">
+            <?php if (Yii::$app->user->can('admin')): ?>
 
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                <p>
+                    <?= Html::a(Yii::t('partner','Create Partner'), ['create'], ['class' => 'btn btn-success']) ?>
+                </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            <?php endif; ?>
 
-            'id',
-            'name',
-            [
-                    'attribute' => 'img',
-                'format' => 'html',
-                'value' => function ($model) {
-                   return "<img src='/$model->img' alt='$model->img' width='100'>";
-                }
-            ],
-            'order',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Partner $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
+            <?php Pjax::begin(); ?>
+            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php Pjax::end(); ?>
+            <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
 
-</div>
+                            'id',
+                            'name',
+
+                            [
+                                    'attribute' => 'img',
+                                    'format' => 'html',
+                                    'value' => function ($model) {
+                                        return "<img src='/$model->img' alt='$model->img' width='100'>";
+                                    }
+                            ],
+                            [
+                                    'attribute' => 'order',
+                                    'format' => 'raw',
+                                    'value' => function ($model) {
+                                        if ($model->order == 1) {
+                                            return Yii::t('partner', 'Faol');
+                                        }
+                                        return Yii::t('partner', 'Faol Emas');
+                                    }
+                            ],
+                            [
+                                    'class' => ActionColumn::className(),
+                                    'template' => Yii::$app->user->identity->role === 'admin'
+                                            ? '{view} {update} {delete}'
+                                            : '{view}',
+                                    'urlCreator' => function ($action, Partner $model, $key, $index, $column) {
+                                        return Url::toRoute([$action, 'id' => $model->id]);
+                                    }
+                            ],
+                    ],
+            ]); ?>
+
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+
+

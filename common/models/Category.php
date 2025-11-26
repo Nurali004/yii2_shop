@@ -11,7 +11,9 @@ use yii\helpers\ArrayHelper;
  *
  * @property int $id
  * @property int|null $pid
- * @property string|null $name
+ * @property string|null $name_uz
+ * @property string|null $name_ru
+ * @property string|null $name_en
  * @property int|null $order
  * @property int|null $img
  *
@@ -41,10 +43,12 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pid', 'name'], 'default', 'value' => null],
+            [['pid'], 'default', 'value' => null],
             [['order'], 'default', 'value' => 0],
             [['pid', 'order'], 'integer'],
-            [['name', 'img'], 'string', 'max' => 255],
+            [['name_uz', 'img'], 'string', 'max' => 255],
+            [['name_ru', 'img'], 'string', 'max' => 255],
+            [['name_en', 'img'], 'string', 'max' => 255],
             [['pid'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['pid' => 'id']],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, webp'],
         ];
@@ -57,10 +61,13 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'pid' => 'Pid',
-            'name' => 'Name',
-            'img' => 'Img',
-            'order' => 'Order',
+            'pid' => Yii::t('category', 'Pid'),
+            'name_uz' => Yii::t('product', 'Name uz'),
+            'name_ru' => Yii::t('product', 'Name ru'),
+            'name_en' => Yii::t('product', 'Name en'),
+            'img' => Yii::t('category', 'Img'),
+            'order' => Yii::t('category', 'Order'),
+            'imageFile' => Yii::t('partner', 'ImageFile'),
         ];
     }
 
@@ -98,7 +105,7 @@ class Category extends \yii\db\ActiveRecord
 
     public static function CategoryList()
     {
-        return ArrayHelper::map(Category::find()->all(), 'id', 'name');
+        return ArrayHelper::map(Category::find()->all(), 'id', 'name'.'_'.Yii::$app->language);
 
     }
 

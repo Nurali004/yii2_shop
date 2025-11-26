@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CustomerController implements the CRUD actions for Customer model.
@@ -82,8 +83,14 @@ class CustomerController extends Controller
         $model = new Customer();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                if ($model->upload()) {
+                    if ($model->save()){
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -105,8 +112,16 @@ class CustomerController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if (!is_null($model->imageFile)) {
+                $model->upload();
+
+            }
+                if ($model->load($this->request->post()) && $model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+
         }
 
         return $this->render('update', [

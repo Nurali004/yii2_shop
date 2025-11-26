@@ -10,17 +10,29 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'on beforeRequest' => function ($event) {
+        $language = Yii::$app->session->get('lang', 'en');
+        Yii::$app->language = $language;
+    },
+
     'controllerNamespace' => 'frontend\controllers',
+
+    'modules' => [
+        'gridview' => [
+            'class' => '\kartik\grid\Module',
+        ],
+        'dynagrid' => [
+            'class' => '\kartik\dynagrid\Module',
+        ],
+    ],
     'components' => [
-        'assetManager' => [
-            'bundles' => [
-                'yii\bootstrap5\BootstrapAsset' => [
-                    'css' => []
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+
                 ],
-                'yii\bootstrap5\BootstrapPluginAsset' => [
-                    'js' => [],
-                ]
-            ]
+            ],
         ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -32,7 +44,6 @@ return [
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
         ],
         'log' => [
@@ -47,11 +58,24 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
+            'rules' => [],
+        ],
+        'assetManager' => [
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => true,
+                ],
+            ],
+        ],
+        'mailer' => [
+            'class' => 'yii\symfonymailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'dsn' => 'smtp://mavzurovnurali:gibnsebaqrboicws@smtp.gmail.com:465',
+
             ],
         ],
 
