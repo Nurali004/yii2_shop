@@ -41,37 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-                        <?= $form->field($model, 'body')->widget(TinyMce::className(), [
-                                'options' => ['rows' => 10],
-                                'language' => 'en',
-                                'clientOptions' => [
-                                        'plugins' => 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste help wordcount',
-                                        'toolbar' => 'undo redo | formatselect | bold italic | link image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | code fullscreen',
-                                        'fontsize_formats' => '8pt 10pt 12pt 14pt 18pt 20pt 24pt 36pt',
-                                        'image_advtab' => true,
-                                        'image_class_list' => [
-                                                [
-                                                        'value' => '',
-                                                        'title' => 'None',
-                                                ],
-                                                [
-                                                        'value' => 'img-circle img-no-padding img-responsive',
-                                                        'title' => 'Circle',
-                                                ],
-                                                [
-                                                        'value' => 'img-rounded img-responsive',
-                                                        'title' => 'Rounded',
-                                                ],
-                                                [
-                                                        'value' => 'img-thumbnail img-responsive',
-                                                        'title' => 'Thumbnail',
-                                                ]
-                                        ],
-                                        'images_upload_url' => \yii\helpers\Url::to(['product/upload-image']),
-                                        'plugin_preview_width' => 1110,
-
-                                ]
-                        ]);?>
+                        <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
                     <div class="row">
                         <div class="col-lg-6">
