@@ -18,7 +18,7 @@ use Yii;
 class Cart extends \yii\db\ActiveRecord
 {
 
-    const SESSION_KEY = 'cart';
+    const SESSION_KEY = 'cart_items';
 
 
     /**
@@ -74,5 +74,24 @@ class Cart extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public static function getTotalQuantityForUser(){
+        $sum = 0;
+        if (Yii::$app->user->isGuest) {
+            $cartItems = Yii::$app->session->get(self::SESSION_KEY, []);
+            $sum = 0;
+            foreach ($cartItems as $cartItem) {
+                $sum += $cartItem['count'];
+
+            }
+        }else{
+            $sum = Cart::find()->where(['user_id' => Yii::$app->user->identity->id])->sum('count');
+        }
+        return $sum;
+
+
+
+    }
+
 
 }

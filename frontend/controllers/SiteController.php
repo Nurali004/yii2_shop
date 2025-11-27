@@ -98,12 +98,25 @@ class SiteController extends \frontend\base\Controller
      */
     public function actionIndex()
     {
+        $tabs = [
+            1 => Category::find()->where(['pid' => 1])->all(),
+            2 => Category::find()->where(['pid' => 5])->all(),
+            3 => Category::find()->where(['pid' => 10])->all(),
+        ];
+
+        $partners = Partner::find()->all();
 
         $categories = Category::find()->all();
         $products = Product::find()->limit(8)->all();
         $sliders = Slider::find()->all();
 
-        return $this->render('index', ['categories' => $categories, 'products' => $products, 'sliders' => $sliders]);
+        return $this->render('index', [
+            'categories' => $categories,
+            'products' => $products,
+            'sliders' => $sliders,
+            'tabs' => $tabs,
+            'partners' => $partners,
+        ]);
     }
 
     /**

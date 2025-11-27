@@ -11,12 +11,12 @@ use yii\web\Controller;
 class ShopController extends \frontend\base\Controller
 {
     public $layout = 'shop-layout';
-    public function actionImage(){
+    public function actionIndex(){
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
         $dataProvider->pagination->pageSize = 9;
 
-        return $this->render('image', [
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
 

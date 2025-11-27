@@ -31,6 +31,14 @@ class ShopAsset extends  AssetBundle
         'js/app.js',
 
 
+
+    ];
+
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\web\JqueryAsset',
+        'yii\bootstrap5\BootstrapAsset',
+
     ];
 
 }
