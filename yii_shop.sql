@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 17, 2025 at 06:10 AM
+-- Generation Time: Nov 27, 2025 at 06:48 PM
 -- Server version: 8.0.40
 -- PHP Version: 8.3.14
 
@@ -106,6 +106,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/setting/view', 2, NULL, NULL, NULL, 1762358866, 1762358866),
 ('/site/index', 2, NULL, NULL, NULL, 1762435572, 1762435572),
 ('/site/profile', 2, NULL, NULL, NULL, 1762839844, 1762839844),
+('/site/update-profile', 2, NULL, NULL, NULL, 1764088206, 1764088206),
 ('/slider/*', 2, NULL, NULL, NULL, 1762359162, 1762359162),
 ('/slider/index', 2, NULL, NULL, NULL, 1762603325, 1762603325),
 ('/slider/view', 2, NULL, NULL, NULL, 1762603325, 1762603325),
@@ -191,6 +192,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Home', '/site/index'),
 ('OtherProduct', '/site/index'),
 ('SiteProfile', '/site/profile'),
+('SiteProfile', '/site/update-profile'),
 ('Slider', '/slider/*'),
 ('SliderList', '/slider/index'),
 ('SliderList', '/slider/view'),
@@ -255,6 +257,16 @@ CREATE TABLE `cart` (
   `count` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `count`) VALUES
+(1, 1, 1, 44),
+(2, 1, 2, 7),
+(4, 1, 3, 4),
+(7, 1, 11, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -268,28 +280,29 @@ CREATE TABLE `category` (
   `order` int DEFAULT '0',
   `img` varchar(255) DEFAULT NULL,
   `name_ru` varchar(255) DEFAULT NULL,
-  `name_en` varchar(255) DEFAULT NULL
+  `name_en` varchar(255) DEFAULT NULL,
+  `status` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `pid`, `name_uz`, `order`, `img`, `name_ru`, `name_en`) VALUES
-(1, NULL, 'Smartfonlar', 0, 'uploads/category/633b5984f8af8c7e5a371e0b-na-i13-pro-max-cell-phones-6-3-inch-hd_K54wxE.jpg', 'Смартфоны', 'Smartphones'),
-(2, 1, 'Samsung', 0, 'uploads/category/samsung_PwmoYn.webp', 'Samsung', 'Samsung'),
-(3, 1, 'Xiaomi', 0, 'uploads/category/xiaomi_sggHR4.webp', 'Xiaomi', 'Xiaomi'),
-(4, 1, 'IPhone', 0, 'uploads/category/Iphone_PfexAN.webp', 'IPhone', 'IPhone'),
-(5, NULL, 'Kompyuterlar', 0, 'uploads/category/laptopstopicpage-2048px-3685-2x1-1_QGCTZD.webp', 'Компьютеры', 'Computers'),
-(6, 5, 'Asus', 0, 'uploads/category/asus_aA1tqV.png', 'Асус', 'Asus'),
-(7, 5, 'Mac', 0, 'uploads/category/macbook_y2ZsA9.jpg', 'Мак', 'Mac'),
-(8, 5, 'Lenovo', 0, 'uploads/category/lenovo_cUrSyZ.jpg', 'Леново', 'Lenovo'),
-(9, 5, 'Acer', 0, 'uploads/category/acer_MZ9vug.jpg', 'Acep', 'Acer'),
-(10, NULL, 'Maishiy Texnika', 0, 'uploads/category/920__95_1776378711_HP3RdW.jpg', 'Бытовая техника', 'Home Appliances'),
-(11, 10, 'Changyutgich', 0, 'uploads/category/changyutgich_ZWHEOO.webp', 'Пылесос', 'Vacuum Cleaner'),
-(12, 10, 'Kir yuvish mashinasi', 0, 'uploads/category/kiryuvish_DCSNpa.webp', 'Стиральная машина', 'Washing Machine'),
-(13, 10, 'Dazmol', 0, 'uploads/category/dazmol_yd_bfY.jpg', 'Утюг', 'Iron'),
-(14, 10, 'Tikuv mashinasi', 0, 'uploads/category/tikuv_Ie9n6u.webp', 'Швейная машина', 'Sewing machine');
+INSERT INTO `category` (`id`, `pid`, `name_uz`, `order`, `img`, `name_ru`, `name_en`, `status`) VALUES
+(1, NULL, 'Smartfonlar', 0, 'uploads/category/633b5984f8af8c7e5a371e0b-na-i13-pro-max-cell-phones-6-3-inch-hd_K54wxE.jpg', 'Смартфоны', 'Smartphones', 1),
+(2, 1, 'Samsung', 0, 'uploads/category/samsung_PwmoYn.webp', 'Samsung', 'Samsung', 0),
+(3, 1, 'Xiaomi', 0, 'uploads/category/xiaomi_sggHR4.webp', 'Xiaomi', 'Xiaomi', 0),
+(4, 1, 'IPhone', 0, 'uploads/category/Iphone_PfexAN.webp', 'IPhone', 'IPhone', 0),
+(5, NULL, 'Kompyuterlar', 0, 'uploads/category/laptopstopicpage-2048px-3685-2x1-1_QGCTZD.webp', 'Компьютеры', 'Computers', 1),
+(6, 5, 'Asus', 0, 'uploads/category/asus_aA1tqV.png', 'Асус', 'Asus', 0),
+(7, 5, 'Mac', 0, 'uploads/category/macbook_y2ZsA9.jpg', 'Мак', 'Mac', 0),
+(8, 5, 'Lenovo', 0, 'uploads/category/lenovo_cUrSyZ.jpg', 'Леново', 'Lenovo', 0),
+(9, 5, 'Acer', 0, 'uploads/category/acer_MZ9vug.jpg', 'Acep', 'Acer', 0),
+(10, NULL, 'Maishiy Texnika', 0, 'uploads/category/920__95_1776378711_HP3RdW.jpg', 'Бытовая техника', 'Home Appliances', 1),
+(11, 10, 'Changyutgich', 0, 'uploads/category/changyutgich_ZWHEOO.webp', 'Пылесос', 'Vacuum Cleaner', 0),
+(12, 10, 'Kir yuvish mashinasi', 0, 'uploads/category/kiryuvish_DCSNpa.webp', 'Стиральная машина', 'Washing Machine', 0),
+(13, 10, 'Dazmol', 0, 'uploads/category/dazmol_yd_bfY.jpg', 'Утюг', 'Iron', 0),
+(14, 10, 'Tikuv mashinasi', 0, 'uploads/category/tikuv_Ie9n6u.webp', 'Швейная машина', 'Sewing machine', 0);
 
 -- --------------------------------------------------------
 
@@ -596,7 +609,8 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 ('m251111_123239_create_support_table', 1762864954),
 ('m251111_160943_category_translation', 1762877789),
 ('m251111_174430_product_translation', 1762883374),
-('m251116_044415_add_img_column_to_customer_table', 1763268310);
+('m251116_044415_add_img_column_to_customer_table', 1763268310),
+('m251127_161053_add_status_column_to_category_table', 1764259901);
 
 -- --------------------------------------------------------
 
@@ -1030,7 +1044,14 @@ INSERT INTO `support` (`id`, `first_name`, `email`, `description`, `status`, `cr
 (16, 'dxfbsb', 'mavzurovnurali@gmail.com', '<p>f bsfgb sgf&nbsp;</p>', 0, '2025-11-16 19:00:00'),
 (17, 'vewrgvewt', 'mavzurovnurali@gmail.com', '<p>sefbserb rt&nbsp;</p>', 0, '2025-11-24 19:00:00'),
 (18, 'Nurali', 'mavzurovnurali@gmail.com', '<p>bu xabar olog web site dan jo\'natildi</p>', 1, '2025-11-10 19:00:00'),
-(19, 'aaefvesr', 'mavzurovnurali@gmail.com', 'sdvgbgfs', 3, '2025-11-10 19:00:00');
+(19, 'aaefvesr', 'mavzurovnurali@gmail.com', 'sdvgbgfs', 3, '2025-11-10 19:00:00'),
+(20, 'Nurali', 'mavzurovnurali@gmail.com', 'ajskjkarfkbjer', 0, NULL),
+(21, 'Nurali', 'mavzurovnurali@gmail.com', '<p>Siteda uzulishlar bo\'layapdi</p>', 0, '2025-11-25 08:46:47'),
+(22, 'Nurali', 'mavzurovnurali@gmail.com', '<p>Siteda muvafaqqiyatli ishlayapdi</p>', 0, '2025-11-25 08:47:51'),
+(23, 'Nurali', 'mavzurovnurali@gmail.com', '<p>Siteda muvafaqqiyatli yuklanaypdi</p>', 0, '2025-11-25 08:49:51'),
+(24, 'Nurali', 'mavzurovnurali@gmail.com', '<p>Siteda muvafaqqiyatli yuklanaypdi</p>', 0, '2025-11-25 08:51:07'),
+(25, 'Nurali', 'mavzurovnurali@gmail.com', '<p>Siteda muvafaqqiyatli yuklanmayapdi</p>', 0, '2025-11-25 08:53:00'),
+(26, 'Nurali', 'mavzurovnurali@gmail.com', '<p>Siteda muvafaqqiyatli yuklanmayapdi</p>', 0, '2025-11-25 08:53:34');
 
 -- --------------------------------------------------------
 
@@ -1057,7 +1078,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`, `role`) VALUES
-(1, 'admin', 'AGI9Tcz7b7OFbAD9hg0KPLZXdzlK507x', '$2y$13$OdVG6lMqY1CsRHYMX/TkTOdjHLW1bmL3YCpVD85wy/FZZgdKL28ta', NULL, 'mavzurovnurali@gmail.com', 10, 1761203800, 1763214883, 'E_nCVc8Y1KqCC5zlkVdl4fhmPwy1bUEm_1761203800', 'admin'),
+(1, 'admin', 'AGI9Tcz7b7OFbAD9hg0KPLZXdzlK507x', '$2y$13$OdVG6lMqY1CsRHYMX/TkTOdjHLW1bmL3YCpVD85wy/FZZgdKL28ta', NULL, 'mavzurovnurali@gmail.com', 10, 1761203800, 1764060062, 'E_nCVc8Y1KqCC5zlkVdl4fhmPwy1bUEm_1761203800', 'admin'),
 (2, 'nurali', 'KvOD89BQoMXT1T5QFm9U4gBf-0G0uYnt', '$2y$13$Eak5lBYsdy8c/OOEyNgc/exHTVl9gjQJrh0pUwhztxPAAIKP2PVc.', NULL, 'nura20009@gmail.com', 10, 1761508803, 1761508803, '3tyJ6wgGAJw1biqN-V-jglwywHkolyyX_1761508803', 'user'),
 (4, 'moderator', 'VQCQWXPCKp2EFmeQ3f23ykwGZu07QZxA', '$2y$13$x8ZaZCLtD2RdnXhvAKcqsuUUKVX6PCaImsFm9ol3NbnqezkfSRV.C', NULL, 'moderator@test.lc', 10, 1762251253, 1762251253, '1GCAIkRNeJyD-QVADduLNH2cL1tD_2ws_1762251253', 'moderator'),
 (5, 'worker', 'aFSyyfdTW2u2dWCHRVJujUZIJfKQ9JcU', '$2y$13$401X7a6VGb2JD.776KMOIO8JcWHmeb.7EZg78UEZbGyugtvfAlj9C', NULL, 'worker@test.lc', 10, 1762710530, 1762710530, 'MVNm5T_htjuXkgusq1RvXpeY_MZYHyZZ_1762710530', 'user'),
@@ -1215,7 +1236,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -1287,7 +1308,7 @@ ALTER TABLE `source_message`
 -- AUTO_INCREMENT for table `support`
 --
 ALTER TABLE `support`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `user`
