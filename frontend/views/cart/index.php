@@ -1,5 +1,7 @@
 <?php
 
+use yii\widgets\Pjax;
+
 $name = 'name_'.Yii::$app->language;
 $description = 'description_'.Yii::$app->language;
 
@@ -9,6 +11,7 @@ $description = 'description_'.Yii::$app->language;
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="table-responsive">
+
                 <table class="table">
                     <thead>
                     <tr>
@@ -23,7 +26,8 @@ $description = 'description_'.Yii::$app->language;
                     <tbody>
                     <?php if (!empty($cartItems)): ?>
                         <?php foreach ($cartItems as $item): ?>
-                            <tr class="item-quantity" data-id="<?= $item['id']?>" data-url="<?= \yii\helpers\Url::to(['cart/change-quantity']) ?>">
+
+                            <tr class="item-quantity" data-id="<?= $item['id'] ?>" data-url="<?= \yii\helpers\Url::to(['cart/change-quantity']) ?>">
                                 <th scope="row">
                                     <div class="d-flex align-items-center">
                                         <img src="/<?= $item['img'] ?>" class="img-fluid me-5" style="width: 80px; height: 80px;" alt="">
@@ -37,35 +41,30 @@ $description = 'description_'.Yii::$app->language;
                                 </td>
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
-<!--                                        <div class="input-group-btn">-->
-<!--                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border">-->
-<!--                                                <i class="fa fa-minus"></i>-->
-<!--                                            </button>-->
-<!--                                        </div>-->
-                                        <input type="number" style="width: 50px" min="1" class="form-control form-control-sm text-center border-0" value="<?= $item['count'] ?>">
-<!--                                        <div class="input-group-btn">-->
-<!--                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">-->
-<!--                                                <i class="fa fa-plus"></i>-->
-<!--                                            </button>-->
-<!--                                        </div>-->
+
+                                        <input type="number" min="1" class="form-control form-control-sm text-center border-0" style="width: 80px" value="<?= $item['count'] ?>">
+
                                     </div>
                                 </td>
                                 <td>
                                     <p class="mb-0 mt-4"><?= $item['total_price'] ?></p>
                                 </td>
                                 <td>
+
                                     <button class="btn btn-md rounded-circle bg-light border mt-4">
                                         <?= \yii\bootstrap5\Html::a('',
                                                 ['cart/delete', 'id' => $item['id']],
                                                 [
                                                         'class' => 'fa fa-times text-danger',
                                                     'data' => [
+
                                                             'method' => 'post',
 
                                                     ]
                                                 ]) ?>
 
                                     </button>
+
                                 </td>
 
                             </tr>
@@ -78,6 +77,7 @@ $description = 'description_'.Yii::$app->language;
 
                     </tbody>
                 </table>
+
             </div>
             <div class="mt-5">
                 <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">

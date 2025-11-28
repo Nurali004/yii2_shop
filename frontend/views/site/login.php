@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<div class="container d-flex justify-content-center align-items-center" style="margin-top: 150px;">
+<div class="container d-flex justify-content-center align-items-center mt-4">
     <div class="row w-100">
         <div class="col-lg-5 mx-auto">
             <div class="card">

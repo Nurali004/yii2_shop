@@ -11,13 +11,13 @@ $name = 'name_' . Yii::$app->language;
 $this->title = 'Shop';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<h1><?= Html::encode($this->title) ?></h1>
+
 
 
 
 
 <div class="container-fluid fruite py-5">
-    <div class="container py-5">
+
         <h1 class="mb-4">Fresh fruits shop</h1>
         <div class="row g-4">
             <div class="col-lg-12">
@@ -238,8 +238,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-    </div>
+
 </div>
+
+
 
 
 

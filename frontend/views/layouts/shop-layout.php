@@ -90,7 +90,7 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                                         ['label' => 'Home', 'url' => ['/site/index']],
                                         ['label' => 'About', 'url' => ['/site/about']],
                                         ['label' => 'Contact', 'url' => ['/site/contact']],
-                                        ['label' => 'Shop', 'url' => ['/shop/image']],
+                                        ['label' => 'Shop', 'url' => ['/shop/index']],
                                 ],
 
 
@@ -134,24 +134,30 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
             </div>
     </header>
 
-    <main role="main" class="flex-shrink-0">
-        <div class="container-fluid page-header py-5">
+
+
+
+            <div class="container-fluid page-header py-5">
+
             <?= Breadcrumbs::widget([
-                    'options' => ['class' => 'breadcrumb-custom',
-                            'tag' => 'div',
-                        'itemTemplate' => '{link} / ',
-                        'activeItemTemplate' => '{link}',
-                        ''
-                            ],
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+
+
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    'tag' => 'ol',
+                'navOptions' => [],
+                'options' => [
+
+                        'class' => 'breadcrumb justify-content-center mb-0',
+                    'id' => false,
+                ],
+
             ]) ?>
-        </div>
-        <div class="container">
+            </div>
 
             <?= Alert::widget() ?>
             <?= $content ?>
-        </div>
-    </main>
+
+
 
    <footer>
        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
