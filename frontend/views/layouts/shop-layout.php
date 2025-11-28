@@ -115,7 +115,7 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
                             <a href="<?= \yii\helpers\Url::to(['/cart/index']) ?>" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;"><?= $cartItemCount ?></span>
+                                <span id="cart-quantity" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;"><?= $cartItemCount ?></span>
                             </a>
                             <?php if (!Yii::$app->user->isGuest): ?>
                                 <a href="<?= \yii\helpers\Url::to(['/site/profile']) ?>" class="my-auto">
@@ -135,10 +135,19 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
     </header>
 
     <main role="main" class="flex-shrink-0">
-        <div class="container">
+        <div class="container-fluid page-header py-5">
             <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    'options' => ['class' => 'breadcrumb-custom',
+                            'tag' => 'div',
+                        'itemTemplate' => '{link} / ',
+                        'activeItemTemplate' => '{link}',
+                        ''
+                            ],
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
+        </div>
+        <div class="container">
+
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>

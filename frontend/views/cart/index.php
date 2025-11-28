@@ -23,7 +23,7 @@ $description = 'description_'.Yii::$app->language;
                     <tbody>
                     <?php if (!empty($cartItems)): ?>
                         <?php foreach ($cartItems as $item): ?>
-                            <tr>
+                            <tr class="item-quantity" data-id="<?= $item['id']?>" data-url="<?= \yii\helpers\Url::to(['cart/change-quantity']) ?>">
                                 <th scope="row">
                                     <div class="d-flex align-items-center">
                                         <img src="/<?= $item['img'] ?>" class="img-fluid me-5" style="width: 80px; height: 80px;" alt="">
@@ -37,17 +37,17 @@ $description = 'description_'.Yii::$app->language;
                                 </td>
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="<?= $item['count'] ?>">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+<!--                                        <div class="input-group-btn">-->
+<!--                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border">-->
+<!--                                                <i class="fa fa-minus"></i>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+                                        <input type="number" style="width: 50px" min="1" class="form-control form-control-sm text-center border-0" value="<?= $item['count'] ?>">
+<!--                                        <div class="input-group-btn">-->
+<!--                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">-->
+<!--                                                <i class="fa fa-plus"></i>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
                                     </div>
                                 </td>
                                 <td>

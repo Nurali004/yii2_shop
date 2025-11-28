@@ -203,9 +203,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <p class="text-dark fs-5 fw-bold mb-0"><?= $product->price ?></p>
                                             <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>Add to Cart', ['cart/create', 'id' => $product->id],
                                                     [
-                                                            'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
-
-
+                                                        'data' => [
+                                                                'method' => 'post',
+                                                            ],
+                                                        'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
                                                     ],
                                             ) ?>
 

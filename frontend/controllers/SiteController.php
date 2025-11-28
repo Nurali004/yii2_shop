@@ -4,10 +4,12 @@ namespace frontend\controllers;
 
 use backend\models\ProductSearch;
 use common\models\Category;
+use common\models\Customer;
 use common\models\Partner;
 use common\models\Product;
 use common\models\ProductImage;
 use common\models\Slider;
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -22,6 +24,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -289,5 +292,71 @@ class SiteController extends \frontend\base\Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionChange($lang)
+    {
+
+        Yii::$app->language = $lang;
+        Yii::$app->session->set('lang', $lang);
+
+        return $this->goHome();
+
+    }
+
+    public function actionProfile()
+    {
+        //dddd
+        $user = Yii::$app->user->identity;
+
+        $customer = Customer::find()->where(['user_id'=>$user->id])->one() ?? null;
+
+        return $this->render('profile', ['user' => $user
+        , 'customer' => $customer]);
+
+    }
+
+    public function actionProfileUpdate()
+    {
+        $user = User::findOne(Yii::$app->user->id);
+
+        if (Yii::$app->request->isPost) {
+
+            $user->load(Yii::$app->request->post());
+            if ($user->save(false)) {
+                Yii::$app->session->setFlash('success', 'Profile updated successfully.');
+
+                $this->redirect(['/site/profile']);
+
+            }
+
+        }
+
+    }
+
+    public function actionCustomerUpdate()
+    {
+
+        $customer = Customer::find()->where(['user_id'=>Yii::$app->user->identity->id])->one();
+        if (!isset($customer)) {
+            $customer = new Customer();
+        }
+
+        if (Yii::$app->request->isPost) {
+
+
+            $customer->imageFile = UploadedFile::getInstance($customer, 'imageFile');
+            if (!is_null($customer->imageFile)) {
+                $customer->upload();
+            }
+
+            $customer->user_id = Yii::$app->user->identity->id;
+            if ($customer->load(Yii::$app->request->post()) && $customer->save(false)) {
+                Yii::$app->session->setFlash('success', 'Customer updated successfully.');
+                $this->redirect(['/site/profile']);
+            }
+
+        }
+
     }
 }
