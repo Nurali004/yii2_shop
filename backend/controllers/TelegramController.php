@@ -28,7 +28,7 @@ class TelegramController extends  Controller
         $url = \Yii::$app->homeUrl.'/telegram/bot';
         var_dump($url);
         die();
-        $rs = $this->telegram->setWebhook(['url' => ]);
+        $rs = $this->telegram->setWebhook(['url' => $url]);
         var_dump($rs);
         die();
 
