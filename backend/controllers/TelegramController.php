@@ -12,14 +12,15 @@ class TelegramController extends  Controller
 
     public  $telegram;
 
+    public function __construct($id, $module, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->telegram = new Api('8324193089:AAF0tsuNAOaFRLfqCcWLm54XqUnKHOQ57gQ');
+    }
+
     public function behaviors()
     {
         return parent::behaviors();
-    }
-
-    public function __construct()
-    {
-        $this->telegram = new Api('8324193089:AAF0tsuNAOaFRLfqCcWLm54XqUnKHOQ57gQ');
     }
 
     public function actionBot()
