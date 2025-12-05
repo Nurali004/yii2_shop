@@ -6,7 +6,13 @@ use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
 
+if (Yii::$app->language == 'uz-Cyrl') {
+    $name = 'name_uz';
+}else{
+
 $name = 'name_' . Yii::$app->language;
+}
+
 
 $this->title = 'Shop';
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,24 +26,38 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <h1 class="mb-4">Fresh fruits shop</h1>
         <div class="row g-4">
+            <?php $form = \yii\bootstrap5\ActiveForm::begin([
+                    'method' => 'get',
+                'action' => ['shop/index'],
+            ]) ?>
+            <?php Pjax::begin() ?>
             <div class="col-lg-12">
                 <div class="row g-4">
+
                     <div class="col-xl-3">
                         <div class="input-group w-100 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+
+                          <div class="input-group">
+                              <?= $form->field($searchModel, 'search')->textInput(['placeholder' => 'Search products', 'class'=> 'form-control p-3'])->label(false) ?>
+                          </div>
+
+                           <div class="input-group">
+                               <?= Html::submitButton('<i class="fas fa-search"></i>', ['class' => 'btn btn-primary']) ?>
+                           </div>
+
                         </div>
                     </div>
                     <div class="col-6"></div>
                     <div class="col-xl-3">
                         <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                            <label for="fruits">Default Sorting:</label>
-                            <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                <option value="volvo">Nothing</option>
-                                <option value="saab">Popularity</option>
-                                <option value="opel">Organic</option>
-                                <option value="audi">Fantastic</option>
-                            </select>
+                            <?= $form->field($searchModel, 'sortt')->dropDownList([
+                                    'expensive' => 'Avval qimmatlari',
+                                    'cheap' => 'Avval arzonlari',
+                                     'a' => "yangi qo'shilganlar",
+                                     'z' => "eski qo'shilganlar",
+
+                            ])->label('Saralash') ?>
+
                         </div>
                     </div>
                 </div>
@@ -84,106 +104,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="col-lg-12">
                                 <div class="mb-3">
                                     <h4 class="mb-2">Price</h4>
-                                    <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
-                                    <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+
+                            <?= $form->field($searchModel, 'price')->input('range',['placeholder' => 'Price', 'id' => 'rangeInput', 'class'=> 'form-range w-100', 'oninput' => 'amount.value=rangeInput.value', 'value' => $minValue, 'min' => $minValue,  'max'=> $maxValue ])->label(false) ?>
+
+<!--                                    <input type="range" class="" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">-->
+                                    <output id="amount" name="amount" min-velue="<?=$minValue ?>" max-value="<?= $maxValue ?>f" for="rangeInput"><?= $minValue ?></output>
+
+
                                 </div>
+                                <?= Html::submitButton('Apply', ['class' => 'btn btn-primary']) ?>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="mb-3">
-                                    <h4>Additional</h4>
-                                    <div class="mb-2">
-                                        <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                        <label for="Categories-1"> Organic</label>
-                                    </div>
-                                    <div class="mb-2">
-                                        <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                        <label for="Categories-2"> Fresh</label>
-                                    </div>
-                                    <div class="mb-2">
-                                        <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                                        <label for="Categories-3"> Sales</label>
-                                    </div>
-                                    <div class="mb-2">
-                                        <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                                        <label for="Categories-4"> Discount</label>
-                                    </div>
-                                    <div class="mb-2">
-                                        <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                                        <label for="Categories-5"> Expired</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <h4 class="mb-3">Featured products</h4>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="img/featur-1.jpg" class="img-fluid rounded" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="img/featur-2.jpg" class="img-fluid rounded" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-start">
-                                    <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                        <img src="img/featur-3.jpg" class="img-fluid rounded" alt="">
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-2">Big Banana</h6>
-                                        <div class="d-flex mb-2">
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star text-secondary"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                        <div class="d-flex mb-2">
-                                            <h5 class="fw-bold me-2">2.99 $</h5>
-                                            <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center my-4">
-                                    <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="position-relative">
-                                    <img src="img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
-                                    <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
-                                        <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="col-lg-9">
@@ -193,19 +124,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                 <div class="rounded position-relative fruite-item">
                                     <div class="fruite-img">
-                                        <img src="/<?= $product->img ?>" class="img-fluid w-100 rounded-top" alt="">
+                                        <a href="<?= Url::to(['shop/detail', 'id'=> $product->id]) ?>"><img src="/<?= $product->img ?>" class="img-fluid w-100 rounded-top" alt=""></a>
                                     </div>
-                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"><?= $product->category->name_uz ?></div>
-                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
 
-                                        <p><?= $product->name_uz ?></p>
+
+                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"><?= $product->category->$name ?></div>
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                        <?= Html::a('❤️', ['favorite/add', 'product_id' => $product->id], ['class' => 'btn btn-primary']) ?>
+
+                                        <p><a href="<?= Url::to(['shop/detail', 'id' => $product->id]) ?>"><?= $product->$name ?></a></p>
                                         <div class="d-flex justify-content-between flex-lg-wrap">
-                                            <p class="text-dark fs-5 fw-bold mb-0"><?= $product->price ?></p>
-                                            <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>Add to Cart', ['cart/create', 'id' => $product->id],
+                                            <p class="text-dark fs-5 fw-bold mb-0"><?= Yii::$app->formatter->asCurrency($product->price ) ?></p>
+                                            <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
                                                     [
-                                                        'data' => [
-                                                                'method' => 'post',
-                                                            ],
+
                                                         'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
                                                     ],
                                             ) ?>
@@ -220,23 +152,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             <div class="col-12">
                                 <div class="pagination d-flex justify-content-center mt-5">
-                                    <?=
-                                   \yii\bootstrap5\LinkPager::widget([
-                                           'pagination' => $dataProvider->pagination,
-                                       'options' =>[
-                                               'tag' => false,
-                                       ],
-
-
-                                       'class' => 'rounded',
-                                   ])
-                                    ?>
+                                    <?= \yii\bootstrap5\LinkPager::widget([
+                                            'pagination' => $dataProvider->pagination,
+                                            'options' => [
+                                                    'class' => 'pagination',
+                                                    'tag' => false,
+                                            ],
+                                            'linkContainerOptions' => [ 'tag' => false ],
+                                            'linkOptions' => ['class' => 'rounded'],
+                                    ]) ?>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <?php Pjax::end(); ?>
+            <?php \yii\bootstrap5\ActiveForm::end(); ?>
         </div>
 
 </div>

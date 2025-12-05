@@ -2,14 +2,16 @@
 
 namespace frontend\controllers;
 
-use backend\models\ProductSearch;
 use common\models\Category;
+use common\models\ClientSaying;
 use common\models\Customer;
 use common\models\Partner;
 use common\models\Product;
 use common\models\ProductImage;
 use common\models\Slider;
+use common\models\Statistic;
 use common\models\User;
+use frontend\models\ProductSearch;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -107,13 +109,18 @@ class SiteController extends \frontend\base\Controller
      */
     public function actionIndex()
     {
-        $tabs = [
-            1 => Category::find()->where(['pid' => 1])->all(),
-            2 => Category::find()->where(['pid' => 5])->all(),
-            3 => Category::find()->where(['pid' => 10])->all(),
-        ];
+        $statistic = Statistic::find()->one();
+
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         $partners = Partner::find()->all();
+
+        $customers = Customer::find()->all();
+        foreach ($customers as $customer) {
+            $clients = ClientSaying::find()->where(['customer_id' => $customer->id])->all();
+        }
+
 
         $categories = Category::find()->all();
         $products = Product::find()->limit(8)->all();
@@ -123,8 +130,12 @@ class SiteController extends \frontend\base\Controller
             'categories' => $categories,
             'products' => $products,
             'sliders' => $sliders,
-            'tabs' => $tabs,
             'partners' => $partners,
+            'clients' => $clients,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'statistic' => $statistic,
+
         ]);
     }
 

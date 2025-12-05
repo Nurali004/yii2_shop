@@ -62,9 +62,9 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'pid' => Yii::t('category', 'Pid'),
-            'name_uz' => Yii::t('product', 'Name uz'),
-            'name_ru' => Yii::t('product', 'Name ru'),
-            'name_en' => Yii::t('product', 'Name en'),
+            'name_uz' => Yii::t('category', 'Name uz'),
+            'name_ru' => Yii::t('category', 'Name ru'),
+            'name_en' => Yii::t('category', 'Name en'),
             'img' => Yii::t('category', 'Img'),
             'order' => Yii::t('category', 'Order'),
             'imageFile' => Yii::t('partner', 'ImageFile'),

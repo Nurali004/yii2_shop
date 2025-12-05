@@ -3,6 +3,9 @@
 namespace frontend\controllers;
 
 use common\models\Cart;
+use common\models\Customer;
+use common\models\Order;
+use common\models\OrderItem;
 use common\models\Product;
 
 use Yii;
@@ -32,28 +35,16 @@ class CartController extends \frontend\base\Controller
         ];
     }
 
-    public function actionIndex(){
-        $name = 'name_' . Yii::$app->language;
+    public function actionIndex()
+    {
+
 
         if (Yii::$app->user->isGuest) {
             $cartItems = Yii::$app->session->get(Cart::SESSION_KEY, []);
 
-        }else{
+        } else {
 
-        $cartItems = Cart::findBySql("SELECT
-                p.id,
-                p.name_uz,
-                p.img,
-                p.price,
-            
-                c.count,
-                c.count * p.price AS total_price
-            
-            FROM cart c
-            LEFT JOIN product p ON c.product_id = p.id
-            WHERE c.user_id = :user_id; ",
-
-            [':user_id' => Yii::$app->user->identity->id])->asArray()->all();
+            $cartItems = Cart::getCartProducts(Yii::$app->user->id);
 
         }
 
@@ -65,6 +56,7 @@ class CartController extends \frontend\base\Controller
 
     public function actionCreate()
     {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
 
         $id = Yii::$app->request->post('id');
@@ -72,52 +64,53 @@ class CartController extends \frontend\base\Controller
 
         if (!empty($product)) {
             if (Yii::$app->user->isGuest) {
-                
+
                 $cartItems = Yii::$app->session->get(Cart::SESSION_KEY, []);
                 $found = false;
 
                 foreach ($cartItems as $i => $item) {
                     if ($item['id'] == $product->id) {
 
-                    $cartItems[$i]['count'] = $item['count'] + 1;
-                    $cartItems[$i]['total_price'] = $item['count'] * $product->price;
+                        $cartItems[$i]['count'] = $item['count'] + 1;
+                        $cartItems[$i]['total_price'] = $cartItems[$i]['count'] * $product->price;
 
-                    $found = true;
+
+                        $found = true;
                     }
                 }
 
-                    if (!$found) {
-                        $cartItem = [
-                            'id' => $product->id,
-                            'name_uz' => $product->name_uz,
-                            'name_ru' => $product->name_ru,
-                            'name_en' => $product->name_en,
-                            'price' => $product->price,
-                            'img' => $product->img,
-                            'count' => 1,
-                            'total_price' => $product->price,
+                if (!$found) {
+                    $cartItem = [
+                        'id' => $product->id,
+                        'name_uz' => $product->name_uz,
+                        'name_ru' => $product->name_ru,
+                        'name_en' => $product->name_en,
+                        'price' => $product->price,
+                        'img' => $product->img,
+                        'count' => 1,
+                        'total_price' => $product->price,
 
-                        ];
+                    ];
                     $cartItems[] = $cartItem;
-                    }
+                }
 
 
                 Yii::$app->session->set(Cart::SESSION_KEY, $cartItems);
 
 
-            }else{
+            } else {
 
-            $cartItem = Cart::findOne(['user_id' => Yii::$app->user->identity->id, 'product_id' => $id]);
-            if (!empty($cartItem)) {
-                $cartItem->count++;
-            }else{
-                $cartItem = new Cart();
-                $cartItem->user_id = Yii::$app->user->identity->id;
-                $cartItem->product_id = $id;
-                $cartItem->count = 1;
-            }
+                $cartItem = Cart::findOne(['user_id' => Yii::$app->user->identity->id, 'product_id' => $id]);
+                if (!empty($cartItem)) {
+                    $cartItem->count++;
+                } else {
+                    $cartItem = new Cart();
+                    $cartItem->user_id = Yii::$app->user->identity->id;
+                    $cartItem->product_id = $id;
+                    $cartItem->count = 1;
+                }
 
-            $cartItem->save();
+                $cartItem->save();
             }
         }
     }
@@ -134,16 +127,16 @@ class CartController extends \frontend\base\Controller
                 Yii::$app->session->set(Cart::SESSION_KEY, $cartItems);
             }
 
-        }else{
+        } else {
 
-        $cartItem = Cart::findOne(['user_id' => Yii::$app->user->identity->id, 'product_id' => $id]);
-        if (!empty($cartItem)) {
-            $cartItem->delete();
-        }
+            $cartItem = Cart::findOne(['user_id' => Yii::$app->user->identity->id, 'product_id' => $id]);
+            if (!empty($cartItem)) {
+                $cartItem->delete();
+            }
         }
 
         return $this->redirect('/cart/index');
-  }
+    }
 
     public function actionChangeQuantity()
     {
@@ -183,4 +176,97 @@ class CartController extends \frontend\base\Controller
             'totalQuantity' => Cart::getTotalQuantityForUser(Yii::$app->user->id ?? null)
         ]);
     }
+
+    public function actionCheckout()
+    {
+        $order = new Order();
+
+        if (!Yii::$app->user->isGuest){
+            $userId = Yii::$app->user->identity->id;
+            $customer = Customer::findOne(['user_id' => $userId]);
+            $order->user_id = $userId;
+            $order->l_name = $customer->l_name;
+            $order->f_name = $customer->f_name;
+            $order->phone = $customer->phone;
+            $order->address = $customer->address;
+
+
+        }
+        return $this->render('checkout', [
+            'order' => $order
+        ]);
+
+    }
+
+    public function actionCreateOrder()
+    {
+        $post = Yii::$app->request->post();
+
+        $order = new Order();
+        if (!Yii::$app->user->isGuest) {
+            $userId = Yii::$app->user->identity->id;
+            $order->user_id = $userId;
+            $order->l_name = $post['Order']['l_name'];
+            $order->f_name = $post['Order']['f_name'];
+            $order->phone = $post['Order']['phone'];
+            $order->address = $post['Order']['address'];
+            $order->save();
+
+
+            $cartItems = Cart::getCartProducts(Yii::$app->user->id);
+            foreach ($cartItems as $item) {
+                $orderItem = new OrderItem();
+                $orderItem->order_id = $order->id;
+                $orderItem->product_id = $item['id'];
+                $orderItem->count = $item['count'];
+                $orderItem->price = $item['total_price'];
+                $orderItem->save();
+            }
+
+
+        }
+        else{
+
+            $order->l_name = $post['Order']['l_name'];
+            $order->f_name = $post['Order']['f_name'];
+            $order->phone = $post['Order']['phone'];
+            $order->address = $post['Order']['address'];
+            $order->save();
+
+            $cartItems = Yii::$app->session->get(Cart::SESSION_KEY, []);
+            foreach ($cartItems as $item) {
+                $orderItem = new OrderItem();
+                $orderItem->order_id = $order->id;
+                $orderItem->product_id = $item['id'];
+                $orderItem->count = $item['count'];
+                $orderItem->price = $item['total_price'];
+                $orderItem->save();
+            }
+
+
+
+        }
+
+        return $this->redirect(['cart/success', 'id' => $order->id] );
+
+    }
+
+    public function actionSuccess($id){
+
+        $order = Order::findOne($id);
+        $orderItems = OrderItem::findAll(['order_id' => $id]);
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->remove(Cart::SESSION_KEY);
+        }else{
+            $carts = Cart::findAll(['user_id' => Yii::$app->user->identity->id]);
+            foreach ($carts as $cart) {
+
+                $cart->delete();
+            }
+        }
+
+
+        return $this->render('success', ['order' => $order, 'orderItems' => $orderItems]);
+    }
+
 }

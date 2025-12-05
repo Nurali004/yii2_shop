@@ -2,8 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\Cart;
 use common\models\Order;
 use backend\models\OrderSearch;
+use common\models\OrderItem;
+use common\models\User;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -27,7 +31,7 @@ class OrderController extends Controller
                     'class' => AccessControl::className(),
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'actions' => ['index', 'view', 'create', 'update', 'delete', 'cart-item'],
                             'allow' => true,
                             'roles' => ['@'],
                         ]
@@ -67,9 +71,32 @@ class OrderController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        Yii::$app->response->format = 'json';
+        $result['status'] = false;
+        $result['content'] = $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
+        return $result;
+    }
+
+
+
+    public function actionCartItem($id)
+    {
+        Yii::$app->response->format = 'json';
+        $result['status'] = false;
+        $order = Order::find()->where(['id' => $id])->one();
+
+
+        $orderItems = OrderItem::find()->where(['order_id' => $id])->all();
+
+
+        $result['content'] = $this->renderAjax('cart-item', [
+            'orderItems' => $orderItems,
+            'order' => $order,
+        ]);
+        return $result;
+
     }
 
     /**
@@ -80,13 +107,19 @@ class OrderController extends Controller
     public function actionCreate()
     {
         $model = new Order();
+        $result['status'] = false;
 
-        if ($this->request->isPost) {
+        if ($this->request->isAjax) {
+            Yii::$app->response->format = 'json';
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                $result['status'] = true;
+                return $result;
+
             }
-        } else {
-            $model->loadDefaultValues();
+            $result['content'] =  $this->renderAjax('_form', [
+                'model' => $model,
+            ]);
+            return $result;
         }
 
         return $this->render('create', [
@@ -105,14 +138,24 @@ class OrderController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isAjax) {
+
+            \Yii::$app->response->format = 'json';
+
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return ['status' => true];
+            }
+
+            return [
+                'status' => false,
+                'content' => $this->renderAjax('_form', ['model' => $model]),
+            ];
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return $this->render('update', ['model' => $model]);
     }
+
 
     /**
      * Deletes an existing Order model.

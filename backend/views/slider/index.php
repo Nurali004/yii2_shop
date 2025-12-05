@@ -64,9 +64,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format' => 'raw',
                                 'value' => function ($model) {
                                     if ($model->order == 1) {
-                                        return "Faol";
+                                        return Yii::t('partner', 'Faol');
                                     }
-                                    return "Faol Emas";
+                                    return Yii::t('partner', 'Faol Emas');
                                 }
                         ],
                         'url:ntext',

@@ -62,7 +62,7 @@ class SourceMessage extends \yii\db\ActiveRecord
 
     public static function getCategories(){
 
-        return ArrayHelper::map(SourceMessage::find()->all(),'category','category');
+        return ArrayHelper::map(SourceMessage::find()->where(['id' => SORT_ASC])->all(),'category','category');
 
     }
 

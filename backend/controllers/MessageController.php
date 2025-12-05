@@ -80,6 +80,7 @@ class MessageController extends Controller
             $model->loadDefaultValues();
         }
 
+
         return $this->render('create', [
             'model' => $model,
         ]);

@@ -5,8 +5,12 @@ use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var common\models\Cart $model */
+if (Yii::$app->language == 'uz-Cyrl') {
+    $name = 'name_uz';
+}else{
 
 $name = 'name_'.Yii::$app->language;
+}
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cart', 'Carts'), 'url' => ['index']];

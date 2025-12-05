@@ -7,20 +7,18 @@ use yii\widgets\DetailView;
 /** @var common\models\Slider $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Sliders', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('slider', 'Sliders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="slider-view">
-    
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?php if (Yii::$app->user->identity->role === 'admin'): ?>
 
         <p>
-            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+            <?= Html::a(Yii::t('universal', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('universal', 'Delete'), ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                             'confirm' => 'Are you sure you want to delete this item?',
@@ -49,9 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html',
                 'value' => function ($model) {
                   if ($model->order == 1) {
-                      return "Faol";
+                      return Yii::t('partner', 'Faol');
                   }
-                  return "Faol Emas";
+                  return Yii::t('partner', 'Faol Emas');
                 }
             ],
             'url:ntext',

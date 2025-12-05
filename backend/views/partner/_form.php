@@ -34,7 +34,7 @@ use yii\widgets\ActiveForm;
 
 
     <div class="form-group mt-3">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('universal', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
 

@@ -1,6 +1,10 @@
 <?php
+if (Yii::$app->language == 'uz-Cyrl') {
+    $name = 'name_uz';
+}else{
 
 $name = 'name_' . Yii::$app->language;
+}
 use common\models\Category;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -58,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
 
                         [
-                                'attribute' => 'name'.'_'.Yii::$app->language,
+                                'attribute' => $name,
 
                         ],
 
@@ -75,9 +79,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'raw',
                             'value' => function ($model) {
                                 if ($model->order == 1) {
-                                    return Yii::t('category', 'Faol');
+                                    return Yii::t('partner', 'Faol');
                                 }
-                                return Yii::t('category', 'Faol emas');
+                                return Yii::t('partner', 'Faol Emas');
                             }
 
 

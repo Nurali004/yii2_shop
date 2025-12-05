@@ -29,13 +29,13 @@ use yii\widgets\ActiveForm;
             <div class="col-6">
 
     <?= $form->field($model, 'order')->dropDownList([
-            0 => 'Faol Emas',
-            1 => 'Faol',
+            0 => Yii::t('partner', 'Faol Emas'),
+            1 => Yii::t('partner', 'Faol'),
     ]) ?>
             </div>
             <div class="col-lg-6 mt-2">
                 <div class="form-group mt-3">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                    <?= Html::submitButton(Yii::t('universal', 'Save'), ['class' => 'btn btn-success']) ?>
                 </div>
             </div>
 

@@ -10,7 +10,18 @@ use yii\widgets\Pjax;
 /** @var backend\models\CartSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$name = 'name_'.Yii::$app->language;
+switch (Yii::$app->language) {
+    case 'ru':
+       $name = 'name_'.Yii::$app->language;
+        break;
+        case 'en':
+            $name = 'name_'.Yii::$app->language;
+            break;
+            default:
+                $name = 'name_uz';
+                break;
+
+}
 
 $this->title = Yii::t('cart', 'Carts');
 $this->params['breadcrumbs'][] = $this->title;

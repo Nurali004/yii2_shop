@@ -102,7 +102,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <div class="form-group mt-3">
-                        <?= Html::submitButton('Update', ['class' => 'btn btn-info']) ?>
+                        <?= Html::submitButton(Yii::t('universal', 'Update'), ['class' => 'btn btn-info']) ?>
                     </div>
 
                     <?php ActiveForm::end(); ?>

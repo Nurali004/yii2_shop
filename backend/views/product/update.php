@@ -4,8 +4,12 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\Product $model */
+if (Yii::$app->language == 'uz-Cyrl') {
+    $name = 'name_uz';
+}else{
+    $name = 'name_'.Yii::$app->language;
+}
 
-$name = 'name_' . Yii::$app->language;
 
 $this->title = Yii::t('product', 'Update Product'). ':  ' . $model->$name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('product', 'Products'), 'url' => ['index']];

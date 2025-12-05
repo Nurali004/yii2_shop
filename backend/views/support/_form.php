@@ -56,13 +56,13 @@ use yii\widgets\ActiveForm;
     ]);?>
 
     <?= $form->field($model, 'status')->dropDownList([
-            0 => "ko'rib chiqsh",
-            1=> "Ko'rib chiqilmoqda",
-            3 => "Ko'rib chiqildi"
+            0 => Yii::t('universal', "ko'rib chiqish"),
+            1=> Yii::t('universal', "Ko'rib chiqilmoqda"),
+            3 => Yii::t('universal', "Ko'rib chiqildi"),
     ]) ?>
 
     <div class="form-group mt-2">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('universal', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

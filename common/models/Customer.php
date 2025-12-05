@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "customer".
@@ -52,12 +53,12 @@ class Customer extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => Yii::t('app', 'User ID'),
-            'f_name' => Yii::t('app', 'F Name'),
-            'l_name' => Yii::t('app', 'L Name'),
-            'phone' => Yii::t('app', 'Phone'),
+            'user_id' => Yii::t('order', 'User ID'),
+            'f_name' => Yii::t('support', 'First Name'),
+            'l_name' => Yii::t('customer', 'Last Name'),
+            'phone' => Yii::t('order', 'Phone'),
             'img' => Yii::t('category', 'Img'),
-            'address' => Yii::t('app', 'Address'),
+            'address' => Yii::t('order', 'Address'),
         ];
     }
 
@@ -83,6 +84,13 @@ class Customer extends \yii\db\ActiveRecord
 
         }
         return false;
+
+    }
+
+    public static function getCustomers()
+    {
+        return ArrayHelper::map(Customer::find()->all(), 'id', 'f_name');
+
 
     }
 

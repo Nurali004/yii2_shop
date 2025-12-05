@@ -13,6 +13,16 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('product', 'Products');
 $this->params['breadcrumbs'][] = $this->title;
+
+if (Yii::$app->language == 'uz-Cyrl') {
+    $lang = 'uz';
+}elseif (Yii::$app->language == 'en') {
+    $lang = 'en';
+}elseif (Yii::$app->language == 'ru') {
+    $lang = 'ru';
+}else{
+    $lang = 'uz';
+}
 ?>
 
 
@@ -51,7 +61,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
 
                             'id',
-                            'name_'.Yii::$app->language,
+                            'name_'.$lang,
+
 
 
 
@@ -91,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                                 'attribute' => 'order',
                             'value' => function ($model) {
-                             return $model->order ? Yii::t('product', 'Faol') : Yii::t('product', 'Faol Emas');
+                             return $model->order ? Yii::t('product', 'Faol') : Yii::t('partner', 'Faol Emas');
                             }
                         ],
 

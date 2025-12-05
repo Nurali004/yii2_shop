@@ -73,9 +73,9 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name_uz' => Yii::t('product', 'Name uz'),
-            'name_ru' => Yii::t('product', 'Name ru'),
-            'name_en' => Yii::t('product', 'Name en'),
+            'name_uz' => Yii::t('category', 'Name uz'),
+            'name_ru' => Yii::t('category', 'Name ru'),
+            'name_en' => Yii::t('category', 'Name en'),
             'description_uz' => Yii::t('product', 'Description uz'),
             'description_ru' => Yii::t('product', 'Description ru'),
             'description_en' => Yii::t('product', 'Description en'),
@@ -134,7 +134,12 @@ class Product extends \yii\db\ActiveRecord
 
     public static function ProductList()
     {
-        $name = 'name_' . Yii::$app->language;
+        if (Yii::$app->language == 'uz-Cyrl') {
+            $name = 'name_uz';
+        }else{
+            $name = 'name_'.Yii::$app->language;
+        }
+
 
         return ArrayHelper::map(Product::find()->all(), 'id', $name);
 

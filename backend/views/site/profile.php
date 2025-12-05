@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $form yii\bootstrap5\ActiveForm */
 /* @var $model \mdm\admin\models\form\ChangePassword */
 
-$this->title = Yii::t('rbac-admin', 'User Profile');
+$this->title = Yii::t('user', 'User Profile');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">
@@ -16,13 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-lg-6">
-            <h3>Password Change</h3>
+            <h3><?= Yii::t('user', 'Password Change') ?></h3>
             <?php $form = ActiveForm::begin(['id' => 'form-change']); ?>
-            <?= $form->field($model, 'oldPassword')->passwordInput() ?>
-            <?= $form->field($model, 'newPassword')->passwordInput() ?>
-            <?= $form->field($model, 'retypePassword')->passwordInput() ?>
+            <?= $form->field($model, 'oldPassword')->passwordInput()->label(Yii::t('user', 'Old Password')) ?>
+            <?= $form->field($model, 'newPassword')->passwordInput()->label(Yii::t('user', 'New Password')) ?>
+            <?= $form->field($model, 'retypePassword')->passwordInput()->label(Yii::t('user', 'Retype Password')) ?>
             <div class="form-group">
-                <?= Html::submitButton(Yii::t('rbac-admin', 'Change'), ['class' => 'btn btn-primary', 'name' => 'change-button']) ?>
+                <?= Html::submitButton(Yii::t('user', 'Change'), ['class' => 'btn btn-primary', 'name' => 'change-button']) ?>
             </div>
             <?php ActiveForm::end(); ?>
         </div>
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="col-lg-6">
 
-            <h3>User Information</h3>
+            <h3><?= Yii::t('user', 'User Information') ?></h3>
             <?php Pjax::begin(['enablePushState' => false]); ?>
             <?php if (Yii::$app->session->hasFlash('success')): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert">

@@ -52,7 +52,7 @@ class Support extends \yii\db\ActiveRecord
             'email' => Yii::t('setting','Email'),
             'description' => Yii::t('setting','Description'),
             'status' => Yii::t('product','Status'),
-            'created_at' => 'Created At',
+            'created_at' => Yii::t('order','Created At'),
         ];
     }
 

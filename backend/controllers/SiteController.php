@@ -2,8 +2,18 @@
 
 namespace backend\controllers;
 
+use common\models\Cart;
+use common\models\Category;
+use common\models\ClientSaying;
 use common\models\Customer;
+use common\models\Favorite;
 use common\models\LoginForm;
+use common\models\Order;
+use common\models\OrderItem;
+use common\models\Partner;
+use common\models\Product;
+use common\models\Statistic;
+use common\models\User;
 use mdm\admin\models\form\ChangePassword;
 use Yii;
 use yii\filters\VerbFilter;
@@ -67,7 +77,49 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $stats = [
+            'categories' => Category::find()->count(),
+            'products' => Product::find()->count(),
+            'carts' => Cart::find()->count(),
+            'orders' => Order::find()->count(),
+            'customers' => User::find()->count(),
+            'partners' => Partner::find()->count(),
+            'clientSayings' => ClientSaying::find()->count(),
+            'favorites' => Favorite::find()->count(),
+        ];
+
+        $statistic = new Statistic();
+        $statistic->user_count = $stats['customers'];
+        $statistic->product_count = $stats['products'];
+        $statistic->order_count = $stats['orders'];
+        $statistic->product_item = $stats['categories'];
+        $statistic->save();
+
+        $statistics = Statistic::find()->one();
+
+
+
+
+        $orders = Order::find()->where(['user_id' => Yii::$app->user->id])->all();
+        foreach ($orders as $order) {
+
+        $orderItems = OrderItem::find()->where(['order_id' => $order->id])->all();
+        }
+
+        $order_st = Order::find()->where(['status' => [1,2]])->count('*');
+        $order_cm = Order::find()->where(['status' => 1])->count('*');
+
+
+
+
+        return $this->render('index', [
+            'stats' => $stats,
+            'orders' => $orders,
+            'orderItems' => $orderItems,
+            'order_st' => $order_st,
+            'order_cm' => $order_cm,
+            'statistics' => $statistics,
+        ]);
     }
 
     /**
@@ -113,7 +165,6 @@ class SiteController extends Controller
         Yii::$app->language = $lang;
         Yii::$app->session->set('lang', $lang);
 
-
         return $this->goHome();
 
 
@@ -156,5 +207,15 @@ class SiteController extends Controller
         return $this->renderAjax('update-profile', [
             'user' => $user,
         ]);
+    }
+
+    public function actionStatistic()
+    {
+
+
+        return $this->render('statistic', [
+            'stats' => $stats,
+        ]);
+
     }
 }

@@ -9,8 +9,12 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var backend\models\ProductImageSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+if (Yii::$app->language == 'uz-Cyrl') {
+    $name = 'name_uz';
+}else{
 
 $name = 'name_' . Yii::$app->language;
+}
 
 $this->title =  Yii::t('product-image','Product Images');
 $this->params['breadcrumbs'][] = $this->title;

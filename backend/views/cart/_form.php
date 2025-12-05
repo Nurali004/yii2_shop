@@ -43,7 +43,7 @@ $name = 'name_' . Yii::$app->language;
         </div>
         <div class="col-6">
     <div class="form-group mt-4">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('universal', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
         </div>

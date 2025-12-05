@@ -29,7 +29,9 @@
         "kartik-v/yii2-widget-switchinput": "dev-master",
         "kartik-v/yii2-dynagrid": "^1.5",
         "kartik-v/yii2-bootstrap5-dropdown": "@dev",
-        "kartik-v/yii2-datecontrol": "@dev"
+        "kartik-v/yii2-datecontrol": "@dev",
+        "irazasyed/telegram-bot-sdk": "^3.15",
+        "aki/yii2-bot-telegram": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

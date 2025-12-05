@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
         <div class="col-6">
     <?= $form->field($model, 'pid')->dropDownList(
             Category::CategoryList(),
-            ['prompt'=> 'Kategoriyani tanlang...']
+            ['prompt'=> Yii::t('category', 'Choose category...')]
     ) ?>
 
         </div>
@@ -49,7 +49,7 @@ use yii\widgets\ActiveForm;
         </div>
         <div class="col-6 mt-2">
     <div class="form-group mt-3">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('universal', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
         </div>

@@ -2,8 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\Cart;
 use common\models\Customer;
 use backend\models\CustomerSearch;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,7 +30,7 @@ class CustomerController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'actions' => ['index', 'view', 'create', 'update', 'delete', 'cart-item'],
                             'allow' => true,
                             'roles' => ['@'],
                         ]
@@ -68,9 +70,26 @@ class CustomerController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        Yii::$app->response->format = 'json';
+        $result['status'] = false;
+        $result['content'] = $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
+        return $result;
+
+    }
+
+    public function actionCartItem()
+    {
+        Yii::$app->response->format = 'json';
+        $result['status'] = false;
+        $carts = Cart::find()->where(['user_id' => Yii::$app->user->identity->id])->all();
+
+        $result['content'] = $this->renderAjax('cart-item', [
+            'carts' => $carts,
+        ]);
+        return $result;
+        
     }
 
     /**
@@ -82,18 +101,19 @@ class CustomerController extends Controller
     {
         $model = new Customer();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-                if ($model->upload()) {
-                    if ($model->save()){
-                        return $this->redirect(['view', 'id' => $model->id]);
-                    }
+        $result['status'] = false;
 
-                }
+        if ($this->request->isAjax) {
+            Yii::$app->response->format = 'json';
+            if ($model->load($this->request->post()) && $model->save()) {
+                $result['status'] = true;
+                return $result;
+
             }
-        } else {
-            $model->loadDefaultValues();
+            $result['content'] =  $this->renderAjax('_form', [
+                'model' => $model,
+            ]);
+            return $result;
         }
 
         return $this->render('create', [

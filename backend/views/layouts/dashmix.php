@@ -37,7 +37,7 @@ use yii\bootstrap5\NavBar;
         <div class="bg-header-dark">
             <div class="content-header bg-white-5">
                 <!-- Logo -->
-                <a class="fw-semibold text-white tracking-wide" href="index.html">
+                <a class="fw-semibold text-white tracking-wide" href="/admin">
               <span class="smini-visible">
                 D<span class="opacity-75">x</span>
               </span>
@@ -91,21 +91,37 @@ use yii\bootstrap5\NavBar;
                     'togglerOptions' => false
                 ]);
                 $menuItems = [
-                        ['label' => 'Home', 'url' => ['/site/index',]],
-                        ['label' => 'Category', 'url' => ['/category/index']],
-                        ['label' => 'Product', 'url' => ['/product/index']],
-                        ['label' => 'Order', 'url' => ['/order/index']],
-                        ['label' => 'Customer', 'url' => ['/customer/index']],
-                        ['label' => 'Cart', 'url' => ['/cart/index']],
-                        ['label' => 'ProductImage', 'url' => ['/product-image/index']],
-                        ['label' => 'Slider', 'url' => ['/slider/index']],
-                        ['label' => 'Settings', 'url' => ['/setting/index']],
+                        ['label' => Yii::t('menu', 'Home'), 'url' => ['/site/index',]],
+                        ['label' => Yii::t('menu', 'Category'), 'url' => ['/category/index']],
+                        ['label' => Yii::t('menu', 'Product'), 'url' => ['/product/index']],
+                        ['label' => Yii::t('menu', 'Order'), 'url' => ['/order/index']],
+                        ['label' => Yii::t('menu', 'Customer'), 'url' => ['/customer/index']],
+                        ['label' => Yii::t('menu', 'Cart'), 'url' => ['/cart/index']],
+                        ['label' => Yii::t('menu', 'ProductImage'), 'url' => ['/product-image/index']],
+                        ['label' => Yii::t('menu', 'Slider'), 'url' => ['/slider/index']],
+                        ['label' => Yii::t('menu', 'Settings'), 'url' => ['/setting/index']],
+                        ['label' => Yii::t('menu', 'Partner'), 'url' => ['/partner/index']],
+                        ['label' => Yii::t('menu', 'Favorite'), 'url' => ['/favorite/index']],
+                        ['label' => Yii::t('menu', 'ClientSaying'), 'url' => ['/client-saying/index']],
+                        ['label' => Yii::t('menu', 'Message'), 'url' => ['/message/index']],
+                        ['label' => Yii::t('menu', 'SourceMessage'), 'url' => ['/source-message/index']],
                 ];
 
 
-                if (Yii::$app->user->isGuest) {
-                    $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-                }
+                $menuItems = MenuHelper::getAssignedMenu(Yii::$app->user->id, null, function ($menu) {
+                    $items = [
+                            'label' => Yii::t('menu', $menu['name']),
+                        'url' => [$menu['route'] ?? '#'],
+                        'items' => []
+                    ];
+
+                    if (!empty($menu['children'])) {
+                        $items['items'] = $menu['children'];
+                    }
+                    return $items;
+                });
+//
+
                 echo Nav::widget([
                     'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
                     'items' => $menuItems,
@@ -145,10 +161,26 @@ use yii\bootstrap5\NavBar;
             </div>
             <!-- END Left Section -->
 
+
+
             <!-- Right Section -->
             <div class="space-x-1">
+                <div class="dropdown d-inline-block">
+                    <button class="btn btn-alt-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?= Yii::t('language', 'Languages') ?>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end p-0">
+                        <li><button class="dropdown-item" type="button"><a href="<?= \yii\helpers\Url::to(['site/change', 'lang' => 'ru']) ?>">RU</a></button></li>
+                        <li><button class="dropdown-item" type="button"><a href="<?= \yii\helpers\Url::to(['site/change', 'lang' =>'uz']) ?>">UZ</a></button></li>
+                        <li><button class="dropdown-item" type="button"><a href="<?= \yii\helpers\Url::to(['site/change', 'lang' =>'uz-Cyrl']) ?>">ЎЗ</a></button></li>
+                        <li><button class="dropdown-item" type="button"><a href="<?= \yii\helpers\Url::to(['site/change', 'lang' =>'en']) ?>">EN</a></button></li>
+                    </ul>
+                </div>
+
                 <!-- User Dropdown -->
                 <div class="dropdown d-inline-block">
+
+
                     <button type="button" class="btn btn-alt-secondary" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-user d-sm-none"></i>
                         <span class="d-none d-sm-inline-block"><?= Yii::$app->user->identity->username ?? "" ?></span>
@@ -344,7 +376,6 @@ use yii\bootstrap5\NavBar;
     <!-- END Footer -->
 </div>
 
-<script src="/backend/web/dashmix/js/dashmix.app.min.js"></script>
 
 
 

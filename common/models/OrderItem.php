@@ -11,6 +11,7 @@ use Yii;
  * @property int|null $order_id
  * @property int|null $product_id
  * @property int|null $count
+ * @property float|null $price
  *
  * @property Order $order
  * @property Product $product
@@ -33,8 +34,9 @@ class OrderItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'product_id', 'count'], 'default', 'value' => null],
+            [['order_id', 'product_id', 'count', 'price'], 'default', 'value' => null],
             [['order_id', 'product_id', 'count'], 'integer'],
+            [['price'], 'number'],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
         ];
@@ -50,6 +52,7 @@ class OrderItem extends \yii\db\ActiveRecord
             'order_id' => 'Order ID',
             'product_id' => 'Product ID',
             'count' => 'Count',
+            'price' => 'Price',
         ];
     }
 

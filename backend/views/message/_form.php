@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
                     }
 
             ),
-            ['prompt' => 'Select source message']
+            ['prompt' => Yii::t('message', 'Select source message')]
     ) ?>
 
     <?= $form->field($model, 'language')->textInput(['maxlength' => true]) ?>
@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'translation')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('universal', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="customer-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(['id' => 'create-form']); ?>
 
 
     <div class="row">
@@ -63,7 +63,7 @@ use yii\widgets\ActiveForm;
                         ]) ?>
                     </div>
                     <div class="col-6">
-                        <?= $form->field($model, 'imageFile')->fileInput(['accept' => 'image/*', 'class'=> 'form-control']) ?>
+                        <?= $form->field($model, 'imageFile')->fileInput(['accept' => 'image/*', 'class'=> 'form-control'])->label(Yii::t('product', 'ImageFile')) ?>
 
 
                     </div>
@@ -72,13 +72,8 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 
-
-
-
-
-
     <div class="form-group mt-3">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('universal', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

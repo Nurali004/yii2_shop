@@ -44,7 +44,10 @@ use yii\bootstrap5\NavBar;
         ['label' => 'ProductImage', 'url' => ['/product-image/index']],
         ['label' => 'Slider', 'url' => ['/slider/index']],
         ['label' => 'Settings', 'url' => ['/setting/index']],
+
+
     ];
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     }     

@@ -28,6 +28,6 @@ use yii\bootstrap5\Html;
             <?= $customer_form->field($user, 'phone')->textInput(['maxlength' => true]) ?>
             <?= $customer_form->field($user, 'address')->textInput(['maxlength' => true]) ?>
             <div class="form-group">
-                <?= Html::submitButton(Yii::t('rbac-admin', 'Change'), ['class' => 'btn btn-primary', 'name' => 'change-button']) ?>
+                <?= Html::submitButton(Yii::t('user', 'Change'), ['class' => 'btn btn-primary', 'name' => 'change-button']) ?>
             </div>
             <?php ActiveForm::end(); ?>

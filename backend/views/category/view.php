@@ -2,8 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+if (Yii::$app->language == 'uz-Cyrl') {
+    $name = 'name_uz';
+}else{
 
 $name = 'name'. '_'.Yii::$app->language;
+}
 
 /** @var yii\web\View $this */
 /** @var common\models\Category $model */
@@ -39,11 +43,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                     'attribute' => 'pid',
                 'label' => 'Parent',
-                'value' => function ($model) {
-                    return $model->p->name ?? null;
+                'value' => function ($model) use($name) {
+                    return $model->p->$name ?? null;
                 }
             ],
-            'name'. '_'.Yii::$app->language,
+            $name,
                 [
                         'attribute' => 'img',
                         'format' => 'html',
@@ -56,9 +60,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($model) {
                    if ($model->order == 1) {
-                       return Yii::t('category', 'Faol');
+                       return Yii::t('partner', 'Faol');
                    }
-                   return Yii::t('category', 'Faol emas');
+                   return Yii::t('partner', 'Faol Emas');
                 }
             ],
         ],

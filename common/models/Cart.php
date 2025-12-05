@@ -92,4 +92,24 @@ class Cart extends \yii\db\ActiveRecord
         return $sum;
     }
 
+    public static function getCartProducts($user_id){
+
+     return   Cart::findBySql("SELECT
+                p.id,
+                p.name_uz,
+                p.img,
+                p.price,
+            
+                c.count,
+                c.count * p.price AS total_price
+            
+            FROM cart c
+            LEFT JOIN product p ON c.product_id = p.id
+            WHERE c.user_id = :user_id; ",
+
+            [':user_id' => $user_id])->asArray()->all();
+
+    }
+
+
 }

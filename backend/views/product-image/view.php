@@ -5,8 +5,12 @@ use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var common\models\ProductImage $model */
+if (Yii::$app->language == 'uz-Cyrl') {
+    $name = 'name_uz';
+}else{
 
 $name = 'name_' . Yii::$app->language;
+}
 
 $this->title = $model->product->$name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('product-image', 'Product Images'), 'url' => ['index']];

@@ -17,16 +17,18 @@ class DashmixAsset extends AssetBundle
         'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
     ];
     public $js = [
-
-        'dashmix/js/dashmix.app.min.js',
         'dashmix/js/plugins/jquery-validation/jquery.validate.js',
         'dashmix/js/pages/op_auth_signin.min.js',
         'js/main.js',
+        'js/app.js',
+        'assets/dashmix/js/dashmix.app.min.js',    // ✔ to‘g‘ri
+        'lib/jquery.min.js',
 
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
+        'yii\widgets\ActiveFormAsset',
         'yii\bootstrap5\BootstrapAsset',
         'yii\bootstrap5\BootstrapPluginAsset',
     ];
