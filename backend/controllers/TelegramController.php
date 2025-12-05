@@ -7,7 +7,7 @@ use yii\web\Controller;
 
 class TelegramController extends  Controller
 {
-    public $layout = 'dashmix';
+
     public $enableCsrfValidation = false;
 
     public  $telegram;

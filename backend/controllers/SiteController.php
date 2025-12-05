@@ -88,16 +88,7 @@ class SiteController extends Controller
             'favorites' => Favorite::find()->count(),
         ];
 
-        $statistic = new Statistic();
-        $statistic->user_count = $stats['customers'];
-        $statistic->product_count = $stats['products'];
-        $statistic->order_count = $stats['orders'];
-        $statistic->product_item = $stats['categories'];
-        $statistic->save();
-
         $statistics = Statistic::find()->one();
-
-
 
 
         $orders = Order::find()->where(['user_id' => Yii::$app->user->id])->all();
