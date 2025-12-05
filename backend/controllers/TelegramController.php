@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Telegram\Bot\Api;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 class TelegramController extends  Controller
@@ -25,7 +26,7 @@ class TelegramController extends  Controller
 
     public function actionBot()
     {
-        $url = \Yii::$app->homeUrl.'/telegram/bot';
+        $url = Url::home('https').'/telegram/bot';
         var_dump($url);
         die();
         $rs = $this->telegram->setWebhook(['url' => $url]);
