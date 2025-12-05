@@ -14,7 +14,6 @@ class TelegramController extends  Controller
 
     public function __construct($id, $module, $config = [])
     {
-        parent::__construct($id, $module, $config);
         $this->telegram = new Api('8324193089:AAF0tsuNAOaFRLfqCcWLm54XqUnKHOQ57gQ');
     }
 
