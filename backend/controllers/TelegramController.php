@@ -30,8 +30,6 @@ class TelegramController extends  Controller
 
         $rs = $this->telegram->setWebhook(['url' => $url]);
 
-
-
         $response = $this->telegram->getWebhookUpdate();
         $message = $response->getMessage();
         $chat_id = $message->getChat()->getId();
