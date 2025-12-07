@@ -12,6 +12,7 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
+
 $cartItemCount = $this->params['cartItemCount'] ?? 0;
 
 \frontend\assets\ShopAsset::register($this);
@@ -69,16 +70,18 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                     NavBar::begin([
                             'brandLabel' => $settings->site_name,
                             'brandUrl' => Yii::$app->homeUrl,
+
                             'options' => [
-                                    'class' => 'navbar-nav mx-auto',
-                                    'id' => false,
+
+                                    'tag' => 'div',
+                                    'class' => "navbar-nav mx-auto" ,
+                                    'id' => ''
 //
                             ],
+
                             'collapseOptions' => false,
                             'togglerContent' => '',
                             'renderInnerContainer' => false,
-
-
 
 
                     ]);
@@ -97,33 +100,54 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                     }
 
                     echo Nav::widget([
-                            'options' => ['class' => 'navbar-nav mx-auto',
-                                'renderInnerContainer' => false,
-                                'items' =>   false,
-                                'renderItem' => false,
-
-                                    ],
-                           // 'emptyClass' => false,
-
-
 
                             'items' => [
-                                    ['label' => Yii::t('menu', 'Home'), 'url' => ['/site/index']],
-                                    ['label' => Yii::t('menu', 'About'), 'url' => ['/site/about']],
-                                    ['label' => Yii::t('site', 'Contact'), 'url' => ['/site/contact']],
-                                    ['label' => Yii::t('menu', 'Shop'), 'url' => ['/shop/index']],
+                                    [
+                                            'label' => 'Home',
+                                            'url' => ['/site/index'],
+//                                            'options' => ['class' => 'nav-item'],       // har bir item uchun
+                                            'linkOptions' => ['class' => 'nav-link'],  // link styling
+                                    ],
+                                    [
+                                            'label' => 'About',
+                                            'url' => ['/site/about'],
+                                           // 'options' => ['class' => 'nav-item'],
+                                            'linkOptions' => ['class' => 'nav-link'],
+                                    ],
+
+                            'options' => ['class' => 'navbar-nav mx-auto',
+                                    'renderInnerContainer' => false,
+                                    'items' => [
+                                            [
+                                                    'visible' => false,
+                                            ]
+
+                                    ],
+                                    'renderItem' => false,
+                                'encodeLabels' => false,
+                                'tag' => false,
+
                             ],
+                        // 'emptyClass' => false,
+
+
+//                            'items' => [
+//                                    ['label' => Yii::t('menu', 'Home'), 'url' => ['/site/index']],
+//                                    ['label' => Yii::t('menu', 'About'), 'url' => ['/site/about']],
+//                                    ['label' => Yii::t('site', 'Contact'), 'url' => ['/site/contact']],
+//                                    ['label' => Yii::t('menu', 'Shop'), 'url' => ['/shop/index']],
+//                            ],
                         //'renderItem' => false,
 
 
-                    ]);
+                    ]]);
 
                     if (Yii::$app->user->isGuest) {
                         echo Html::tag('div', Html::a('Login', ['/site/login'], ['class' => ['btn btn-link login text-decoration-none']]), ['class' => ['d-flex']]);
                     } else {
                         echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
                                 . Html::submitButton(
-                                        Yii::t('site', 'Sign Out').' (' . Yii::$app->user->identity->username . ')',
+                                        Yii::t('site', 'Sign Out') . ' (' . Yii::$app->user->identity->username . ')',
                                         ['class' => 'btn btn-link logout text-decoration-none']
                                 )
                                 . Html::endForm();
@@ -132,14 +156,31 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                     ?>
 
                     <div class="dropdown d-inline-block">
-                        <button class="btn btn-alt-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-alt-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                             <?= Yii::t('language', 'Languages') ?>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end p-0">
-                            <li><button class="dropdown-item" type="button"><a href="<?= \yii\helpers\Url::to(['site/change', 'lang' => 'ru']) ?>">RU</a></button></li>
-                            <li><button class="dropdown-item" type="button"><a href="<?= \yii\helpers\Url::to(['site/change', 'lang' =>'uz']) ?>">UZ</a></button></li>
-                            <li><button class="dropdown-item" type="button"><a href="<?= \yii\helpers\Url::to(['site/change', 'lang' =>'uz-Cyrl']) ?>">ЎЗ</a></button></li>
-                            <li><button class="dropdown-item" type="button"><a href="<?= \yii\helpers\Url::to(['site/change', 'lang' =>'en']) ?>">EN</a></button></li>
+                            <li>
+                                <button class="dropdown-item" type="button"><a
+                                            href="<?= \yii\helpers\Url::to(['site/change', 'lang' => 'ru']) ?>">RU</a>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button"><a
+                                            href="<?= \yii\helpers\Url::to(['site/change', 'lang' => 'uz']) ?>">UZ</a>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button"><a
+                                            href="<?= \yii\helpers\Url::to(['site/change', 'lang' => 'uz-Cyrl']) ?>">ЎЗ</a>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item" type="button"><a
+                                            href="<?= \yii\helpers\Url::to(['site/change', 'lang' => 'en']) ?>">EN</a>
+                                </button>
+                            </li>
                         </ul>
                     </div>
 
@@ -154,7 +195,8 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                                   style="top: -5px; left: 15px; height: 20px; min-width: 20px;"><?= $cartItemCount ?></span>
                         </a>
                         <div class="d-flex" style="margin-right: 15px">
-                            <a href="<?= \yii\helpers\Url::to(['favorite/product-list']) ?>"><i class="fas fa-heart fa-2x"></i></a>
+                            <a href="<?= \yii\helpers\Url::to(['favorite/product-list']) ?>"><i
+                                        class="fas fa-heart fa-2x"></i></a>
 
 
                         </div>
