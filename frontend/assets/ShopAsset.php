@@ -6,6 +6,7 @@ use yii\web\AssetBundle;
 
 class ShopAsset extends  AssetBundle
 {
+
     public $basePath = '@webroot';
     public $baseUrl = '@web/shop';
 
