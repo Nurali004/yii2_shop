@@ -9,8 +9,11 @@ use common\models\Category;
 use common\models\Product;
 use common\models\ProductImage;
 use Telegram\Bot\Api;
+
 use Telegram\Bot\Keyboard\Keyboard;
 use Yii;
+use yii\helpers\Url;
+
 use yii\web\Controller;
 
 class TelegramController extends Controller
@@ -28,11 +31,24 @@ class TelegramController extends Controller
         $this->telegram = new Api('8324193089:AAF0tsuNAOaFRLfqCcWLm54XqUnKHOQ57gQ');
     }
 
+    public function behaviors()
+    {
+        return parent::behaviors();
+    }
+
     public function actionBot()
     {
+
 //        $rs = $this->telegram->setWebhook(['url' => 'https://e84e0f346b1a.ngrok-free.app/telegram/bot']);
 //        var_dump($rs);
 //        die();
+
+        $url = Url::home('https').'/telegram/bot';
+
+        $rs = $this->telegram->setWebhook(['url' => $url]);
+
+
+
 
         $response = $this->telegram->getWebhookUpdate();
         $message = $response->getMessage();
