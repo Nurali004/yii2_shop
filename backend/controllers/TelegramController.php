@@ -230,7 +230,8 @@ class TelegramController extends Controller
 
         foreach ($productItems as $productItem) {
 
-            $photoUrls = '/'.$productItem->image;
+            $photoUrls = curl_file_create($productItem->image, $productItem->image);
+
 
             file_put_contents($this->chat_id.'image', $photoUrls);
             $this->telegram->sendPhoto([
