@@ -171,7 +171,7 @@ $this->title = Yii::t('menu', 'Online Shopping');
 </div>
 
 
-<div class="row">
+<div class="row" style="margin-left: 290px">
     <div class="col-md-8">
         <div class="block block-rounded block-mode-loading-refresh">
             <div class="block-header block-header-default">
@@ -240,78 +240,44 @@ $this->title = Yii::t('menu', 'Online Shopping');
             </div>
         </div>
     </div>
-    <div class="col-md-4 d-flex flex-column">
-        <div class="block block-rounded">
-            <div class="block-content block-content-full d-flex justify-content-between align-items-center flex-grow-1">
-                <div class="me-3">
-                    <p class="fs-3 fw-bold mb-0">
-                        <?= $order_cm ?>
-                    </p>
-                    <p class="text-muted mb-0">
-                        Completed orders
-                    </p>
-                </div>
-                <div class="item rounded-circle bg-body">
-                    <i class="fa fa-check fa-lg text-primary"></i>
-                </div>
-            </div>
-            <div class="block-content block-content-full block-content-sm bg-body-light fs-sm text-center">
-                <a class="fw-medium" href="<?= \yii\helpers\Url::to(['order-item/index']) ?>">
-                    View Archive
-                    <i class="fa fa-arrow-right ms-1 opacity-25"></i>
-                </a>
-            </div>
-        </div>
-        <div class="block block-rounded text-center d-flex flex-column flex-grow-1">
-            <div class="block-content block-content-full d-flex align-items-center flex-grow-1">
-                <div class="w-100">
-                    <div class="item rounded-3 bg-body mx-auto my-3">
-                        <i class="fa fa-archive fa-lg text-primary"></i>
-                    </div>
-                    <div class="fs-1 fw-bold"><?= $order_st ?></div>
-                    <div class="text-muted mb-3">Products out of stock</div>
-                    <div class="d-inline-block px-3 py-1 rounded-pill fs-sm fw-semibold text-warning bg-warning-light">
-                        5% of portfolio
-                    </div>
-                </div>
-            </div>
-            <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
-                <a class="fw-medium" href="<?= \yii\helpers\Url::to(['product/index']) ?>">
-                    Order supplies
-                    <i class="fa fa-arrow-right ms-1 opacity-25"></i>
-                </a>
-            </div>
-        </div>
-    </div>
+
 </div>
 
 
-<div class="row">
+<div class="container-fluid py-5">
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h3>Statistics</h3>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped table-hover table-border table-vcenter">
-                    <tr>
-                        <th>Users</th>
-                        <th>Orders</th>
-                        <th>Products</th>
-                        <th>Categories</th>
-                    </tr>
+        <h3><?= Yii::t('front', 'Statistics') ?></h3>
+        <div class="bg-light p-5 rounded">
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-6 col-xl-3">
 
-
-
-                    <tr>
-
-                        <td><?= $statistics->user_count ?></td>
-                        <td><?= $statistics->order_count ?></td>
-                        <td><?= $statistics->product_count ?></td>
-                        <td><?= $statistics->product_item ?></td>
-                    </tr>
-
-                </table>
+                    <div class="counter bg-white rounded p-5">
+                        <i class="fa fa-users text-secondary"></i>
+                        <h4><?= Yii::t('front', 'Users') ?></h4>
+                        <h1><?= $statistic->user_count ?></h1>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="counter bg-white rounded p-5">
+                        <i class="fa fa-users text-secondary"></i>
+                        <h4><?= Yii::t('product', 'Products') ?></h4>
+                        <h1><?= $statistic->product_count ?></h1>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="counter bg-white rounded p-5">
+                        <i class="fa fa-users text-secondary"></i>
+                        <h4><?= Yii::t('category', 'Categories') ?></h4>
+                        <h1><?= $statistic->product_item ?></h1>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="counter bg-white rounded p-5">
+                        <i class="fa fa-users text-secondary"></i>
+                        <h4><?= Yii::t('order', 'Orders') ?></h4>
+                        <h1><?= $statistic->order_count ?></h1>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
