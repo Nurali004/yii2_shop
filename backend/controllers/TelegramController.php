@@ -301,6 +301,9 @@ class TelegramController extends Controller
 
     public function actionGetPage()
     {
+        if (!file_exists($this->chat_id . 'page' . '.txt')){
+            file_put_contents($this->chat_id . 'page' . '.txt', '');
+        }
         return file_get_contents($this->chat_id . 'page' . '.txt');
 
     }
