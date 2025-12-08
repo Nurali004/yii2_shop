@@ -74,7 +74,7 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                             'options' => [
 
                                     'tag' => 'div',
-                                    'class' => "navbar-nav mx-auto" ,
+                                    'class' => 'navbar-nav mx-auto',
                                     'id' => ''
 //
                             ],
@@ -89,11 +89,8 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                             ['label' => 'Home', 'url' => ['/site/index']],
                             ['label' => 'About', 'url' => ['/site/about']],
                             ['label' => 'Contact', 'url' => ['/site/contact']],
-                            [
-                                    'label' => 'Cart <span id="cart-quantity" class="badge bg-danger">$cartItemCount</span>',
-                                    'url' => ['/cart/index'],
-                                    'encode' => false,
-                            ]
+                            ['label' => 'Shop', 'url' => ['/shop/index']],
+
                     ];
                     if (Yii::$app->user->isGuest) {
                         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -101,46 +98,20 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
 
                     echo Nav::widget([
 
-                            'items' => [
-                                    [
-                                            'label' => 'Home',
-                                            'url' => ['/site/index'],
-//                                            'options' => ['class' => 'nav-item'],       // har bir item uchun
-                                            'linkOptions' => ['class' => 'nav-link'],  // link styling
-                                    ],
-                                    [
-                                            'label' => 'About',
-                                            'url' => ['/site/about'],
-                                           // 'options' => ['class' => 'nav-item'],
-                                            'linkOptions' => ['class' => 'nav-link'],
-                                    ],
+                            'options' => [
+                                    'tag' => null,
 
-                            'options' => ['class' => 'navbar-nav mx-auto',
-                                    'renderInnerContainer' => false,
-                                    'items' => [
-                                            [
-                                                    'visible' => false,
-                                            ]
-
-                                    ],
-                                    'renderItem' => false,
-                                'encodeLabels' => false,
-                                'tag' => false,
-
+                                    'offcanvasOptions' => false,
+                                    'class' => false,
+                                'id' => false,
                             ],
-                        // 'emptyClass' => false,
 
 
-//                            'items' => [
-//                                    ['label' => Yii::t('menu', 'Home'), 'url' => ['/site/index']],
-//                                    ['label' => Yii::t('menu', 'About'), 'url' => ['/site/about']],
-//                                    ['label' => Yii::t('site', 'Contact'), 'url' => ['/site/contact']],
-//                                    ['label' => Yii::t('menu', 'Shop'), 'url' => ['/shop/index']],
-//                            ],
-                        //'renderItem' => false,
 
 
-                    ]]);
+                            'items' => $menuItems,
+                            'encodeLabels' => false,
+                    ]);
 
                     if (Yii::$app->user->isGuest) {
                         echo Html::tag('div', Html::a('Login', ['/site/login'], ['class' => ['btn btn-link login text-decoration-none']]), ['class' => ['d-flex']]);

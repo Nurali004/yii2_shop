@@ -88,7 +88,7 @@ class SiteController extends Controller
             'favorites' => Favorite::find()->count(),
         ];
 
-        $statistics = Statistic::find()->one();
+        $statistic = Statistic::find()->one();
 
 
         $orders = Order::find()->where(['user_id' => Yii::$app->user->id])->all();
@@ -109,7 +109,7 @@ class SiteController extends Controller
             'orderItems' => $orderItems,
             'order_st' => $order_st,
             'order_cm' => $order_cm,
-            'statistics' => $statistics,
+            'statistic' => $statistic,
         ]);
     }
 

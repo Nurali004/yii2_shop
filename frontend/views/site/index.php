@@ -228,11 +228,10 @@ if(Yii::$app->language == 'uz-Cyrl'){
                                                     </p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0"><?= Yii::$app->formatter->asCurrency($product->price )?></p>
-                                                    <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
+                                                     <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
                                                     [
-                                                            'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
 
-
+                                                        'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
                                                     ],
                                             ) ?>
                                                 </div>
@@ -306,11 +305,10 @@ if(Yii::$app->language == 'uz-Cyrl'){
                                                 <p><?= $category_km->$name ?></p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0"><?= $product_km->price ?></p>
-                                                    <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
+                                                     <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
                                                     [
-                                                            'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
 
-
+                                                        'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
                                                     ],
                                             ) ?>
                                                 </div>
@@ -353,11 +351,10 @@ if(Yii::$app->language == 'uz-Cyrl'){
                                                 <p><?= $category_mt->$name ?></p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0"><?= Yii::$app->formatter->asCurrency($product_mt->price ) ?></p>
-                                                    <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
+                                                     <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
                                                     [
-                                                            'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
 
-
+                                                        'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
                                                     ],
                                             ) ?>
                                                 </div>
@@ -419,12 +416,11 @@ if(Yii::$app->language == 'uz-Cyrl'){
                     <h4><?= $product->category->$name ?></h4>
                     <p><a href="<?= Url::to(['shop/detail', 'id' => $product->id]) ?>"><?= $product->$name ?></a></p>
                     <div class="d-flex justify-content-between flex-lg-wrap">
-                        <p class="text-dark fs-5 fw-bold mb-0"><?= Yii::$app->formatter->asCurrency($product->price )?></p>
-                        <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
+                        <p class="text-dark fs-5 fw-bold mb-0"><?= Yii::$app->formatter->asCurrency($product->price, 'USD'  )?></p>
+                         <?= Html::a('<i class="fa fa-shopping-bag me-2 text-primary"></i>'. Yii::t('cart', 'Add to Cart'), ['cart/create', 'id' => $product->id],
                                                     [
-                                                            'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
 
-
+                                                        'class' => 'btn border border-secondary rounded-pill px-3 text-primary btn-add-to-cart',
                                                     ],
                                             ) ?>
                     </div>
@@ -447,36 +443,46 @@ if(Yii::$app->language == 'uz-Cyrl'){
 
 <!-- Fact Start -->
 
-    <div class="col-lg-8" style="margin-left: 200px">
-        <div class="container">
-            <div class="card">
-                <div class="card-header">
-                    <h3><?= Yii::t('front', 'Statistics') ?></h3>
+
+
+<div class="container-fluid py-5">
+    <div class="container">
+        <h3><?= Yii::t('front', 'Statistics') ?></h3>
+        <div class="bg-light p-5 rounded">
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-6 col-xl-3">
+
+                    <div class="counter bg-white rounded p-5">
+                        <i class="fa fa-users text-secondary"></i>
+                        <h4><?= Yii::t('user', 'Users') ?></h4>
+                        <h1><?= $statistic->user_count ?></h1>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-striped table-hover table-border table-vcenter">
-                        <tr>
-                            <th>Users</th>
-                            <th><?= Yii::t('order', 'Orders') ?></th>
-                            <th><?= Yii::t('product', 'Products') ?></th>
-                            <th><?= Yii::t('category', 'Categories') ?></th>
-                        </tr>
-
-
-
-                        <tr>
-
-                            <td><?= $statistic->user_count ?></td>
-                            <td><?= $statistic->order_count ?></td>
-                            <td><?= $statistic->product_count ?></td>
-                            <td><?= $statistic->product_item ?></td>
-                        </tr>
-
-                    </table>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="counter bg-white rounded p-5">
+                        <i class="fa fa-users text-secondary"></i>
+                        <h4><?= Yii::t('product', 'Products') ?></h4>
+                        <h1><?= $statistic->product_count ?></h1>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="counter bg-white rounded p-5">
+                        <i class="fa fa-users text-secondary"></i>
+                        <h4><?= Yii::t('category', 'Categories') ?></h4>
+                        <h1><?= $statistic->product_item ?></h1>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="counter bg-white rounded p-5">
+                        <i class="fa fa-users text-secondary"></i>
+                        <h4><?= Yii::t('order', 'Orders') ?></h4>
+                        <h1><?= $statistic->order_count ?></h1>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 <!-- Fact Start -->
