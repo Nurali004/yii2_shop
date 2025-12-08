@@ -230,7 +230,7 @@ class TelegramController extends Controller
 
         foreach ($productItems as $productItem) {
 
-            $photoUrls = Yii::getAlias('@frontend') . $productItem->image;
+            $photoUrls = Yii::getAlias('@frontend') . "/web/". $productItem->image;
 
             $this->telegram->sendMessage([
                 'chat_id' => $this->chat_id,
