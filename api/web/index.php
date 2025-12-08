@@ -16,12 +16,3 @@ $config = yii\helpers\ArrayHelper::merge(
 );
 
 (new yii\web\Application($config))->run();
-
-
-function vd($var, $exit = true)
-{
-    $dumper = new yii\helpers\BaseVarDumper();
-    echo $dumper::dump($var, 10, true);
-    if ($exit)
-        exit;
-}
