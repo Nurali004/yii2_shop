@@ -241,7 +241,7 @@ class TelegramController extends Controller
             file_put_contents($this->chat_id.'image', $photoUrls);
             $this->telegram->sendPhoto([
                 'chat_id' => $this->chat_id,
-                'photo' => $photoUrls,
+                'photo' => fopen($photoUrls, 'r'),
                 'parse_mode' => 'HTML',
             ]);
             }
