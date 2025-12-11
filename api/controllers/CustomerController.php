@@ -7,6 +7,20 @@ use yii\rest\ActiveController;
 
 class CustomerController extends ActiveController
 {
+    public function behaviors()
+    {
+        return [
+
+                'verbs' => [
+                    'class' => \yii\filters\VerbFilter::class,
+                    'actions' => [
+                        'index'  => ['POST'],
+
+                    ],
+                ],
+        ];
+
+    }
     public $modelClass = 'api\models\Customer';
 
     public $serializer = [

@@ -6,10 +6,26 @@ use common\models\Category;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\rest\Controller;
+use yii\web\Response;
 
 class CategoryController extends ActiveController
 {
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['contentNegotiator'] = [
+            'class' => 'yii\filters\ContentNegotiator',
+            'only' => ['index', 'view'],
+            'formats' => [
+                'application/json' => Response::FORMAT_JSON,
+
+            ]
+        ];
+        return $behaviors;
+
+    }
     public $modelClass = \api\models\Category::class;
+
 
     public $serializer = [
         'class' => 'yii\rest\Serializer',
@@ -20,7 +36,7 @@ class CategoryController extends ActiveController
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Category::find(),
+            'query' => \api\models\Category::find(),
         ]);
         return $dataProvider;
 

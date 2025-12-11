@@ -90,12 +90,14 @@ class SiteController extends Controller
 
         $statistic = Statistic::find()->one();
 
-
-        $orders = Order::find()->where(['user_id' => Yii::$app->user->id])->all();
-        foreach ($orders as $order) {
-
-        $orderItems = OrderItem::find()->where(['order_id' => $order->id])->all();
-        }
+//        $orderItems = [];
+//
+//
+//        $orders = Order::find()->where(['user_id' => Yii::$app->user->id])->all();
+//        foreach ($orders as $order) {
+//
+//        $orderItems = OrderItem::find()->where(['order_id' => $order->id])->all();
+//        }
 
         $order_st = Order::find()->where(['status' => [1,2]])->count('*');
         $order_cm = Order::find()->where(['status' => 1])->count('*');
@@ -105,8 +107,8 @@ class SiteController extends Controller
 
         return $this->render('index', [
             'stats' => $stats,
-            'orders' => $orders,
-            'orderItems' => $orderItems,
+//            'orders' => $orders,
+//            'orderItems' => $orderItems,
             'order_st' => $order_st,
             'order_cm' => $order_cm,
             'statistic' => $statistic,

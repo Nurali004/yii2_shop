@@ -74,15 +74,12 @@ class TelegramController extends Controller
                 $this->actionShowHomePage();
                 return;
 
-            case Text::KOMPYUTER_ORTGA:
-                $this->actionShowCategoryPage();
-                return;
 
             case Text::KOMPYUTERLAR:
                 $this->actionKompyuterPage();
                 return;
 
-            case Text::ASUS_ORTGA:
+            case Text::CATEGORY_ORTGA:
                 $this->actionKompyuterPage();
                 return;
 
@@ -90,9 +87,7 @@ class TelegramController extends Controller
                 $this->actionShowAsusPage($text);
                 return;
 
-            case Text::ASUS_RANG_ORTGA:
-                $this->actionKompyuterPage();
-                return;
+
         }
 
         switch ($this->actionGetPage()) {
@@ -205,7 +200,7 @@ class TelegramController extends Controller
             }
             $text = '<b>'. "Mahsulotlardan birini tanlang!".'</b>';
             $reply_markup->row([
-                Keyboard::button(Text::ASUS_RANG_ORTGA)
+                Keyboard::button(Text::CATEGORY_ORTGA)
             ]);
             $this->telegram->sendMessage([
                 'chat_id' => $this->chat_id,
@@ -230,18 +225,12 @@ class TelegramController extends Controller
 
         foreach ($productItems as $productItem) {
 
-            $photoUrls = Yii::getAlias('@frontend') . "/web/". $productItem->image;
-
-            $this->telegram->sendMessage([
-                'chat_id' => $this->chat_id,
-                'text' => $photoUrls,
-            ]);
-
+            $photoUrls = '/'.$productItem->image;
 
             file_put_contents($this->chat_id.'image', $photoUrls);
             $this->telegram->sendPhoto([
                 'chat_id' => $this->chat_id,
-                'photo' => fopen($photoUrls, 'r'),
+                'photo' => $photoUrls,
                 'parse_mode' => 'HTML',
             ]);
             }
@@ -255,7 +244,7 @@ class TelegramController extends Controller
                 Keyboard::button(Text::ASUS_QORA)
             ])
             ->row([
-                Keyboard::button(Text::ASUS_RANG_ORTGA),
+                Keyboard::button(Text::CATEGORY_ORTGA),
 
             ]);
         $this->telegram->sendMessage([
@@ -294,7 +283,7 @@ class TelegramController extends Controller
             'text' => $text,
             'parse_mode' => 'HTML',
         ]);
-        
+
     }
 
     public function actionSetPage($page)
@@ -306,9 +295,6 @@ class TelegramController extends Controller
 
     public function actionGetPage()
     {
-        if (!file_exists($this->chat_id . 'page' . '.txt')){
-            file_put_contents($this->chat_id . 'page' . '.txt', '');
-        }
         return file_get_contents($this->chat_id . 'page' . '.txt');
 
     }
