@@ -90,6 +90,8 @@ class SiteController extends Controller
 
         $statistic = Statistic::find()->one();
 
+        $orderItems = [];
+
 
         $orders = Order::find()->where(['user_id' => Yii::$app->user->id])->all();
         foreach ($orders as $order) {
