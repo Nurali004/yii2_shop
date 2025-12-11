@@ -297,7 +297,7 @@ Yii::$app->view->registerJs("
         $('.click-me').on('click', function(e) {
         
         $.ajax({
-        'url': 'http://localhost:8888/api/v1/products',
+        'url': 'https://localhost:8888/api/v1/products',
         'method': 'GET',
         'success': function(data) {
         console.log(data);

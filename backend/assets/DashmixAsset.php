@@ -22,8 +22,13 @@ class DashmixAsset extends AssetBundle
         'js/main.js',
         'js/app.js',
         'dashmix/js/dashmix.app.min.js',
+<<<<<<< HEAD
     
         'dashmix/js/lib/jquery.min.js',
+=======
+        'dashmix/lib/jquery.min.js',
+
+>>>>>>> 571194654863ca0bdd1f17a24beece8bb761825d
 
     ];
     public $depends = [
