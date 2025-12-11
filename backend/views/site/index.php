@@ -190,14 +190,14 @@ $this->title = Yii::t('menu', 'Online Shopping');
                         <button type="button" class="btn-block-option" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="si si-chemistry"></i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <?php foreach ($orders as $order): ?>
-                            <a class="dropdown-item" href="#">
-                                <i class="far fa-fw fa-dot-circle opacity-50 me-1"></i><?= $order->status ?>
-                            </a>
-                            <?php endforeach; ?>
-
-                        </div>
+<!--                        <div class="dropdown-menu dropdown-menu-end">-->
+<!--                            --><?php //foreach ($orders as $order): ?>
+<!--                            <a class="dropdown-item" href="#">-->
+<!--                                <i class="far fa-fw fa-dot-circle opacity-50 me-1"></i>--><?php //= $order->status ?>
+<!--                            </a>-->
+<!--                            --><?php //endforeach; ?>
+<!---->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
