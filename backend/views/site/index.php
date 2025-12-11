@@ -17,6 +17,10 @@ $this->title = Yii::t('menu', 'Online Shopping');
     <div class="jumbotron text-center bg-transparent">
         <h1 class="display-4"><?= Yii::t('site', 'Congratulation ') ?>!</h1>
 
+        <p>
+            <button class="click-me btn btn-secondary">Click</button>
+        </p>
+
     </div>
 
     <div class="content">
@@ -282,3 +286,29 @@ $this->title = Yii::t('menu', 'Online Shopping');
         </div>
     </div>
 </div>
+
+<?php
+
+Yii::$app->view->registerJs("
+        $('.click-me').on('click', function(e) {
+        
+        $.ajax({
+        'url': 'http://localhost:8888/api/v1/products',
+        'method': 'GET',
+        'success': function(data) {
+        console.log(data);
+        
+        }
+        
+        
+        
+        
+        });
+
+
+
+         })
+
+");
+
+?>
