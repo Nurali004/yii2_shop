@@ -23,8 +23,9 @@ class ProductController extends ActiveController
             'class' => Cors::class,
 
             'cors' => [
-                'Origin' => ["http://localhost:9999"],
+                'Origin' => ["https://shop.nugaev.uz"],
                 'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
             ]
         ];
 
