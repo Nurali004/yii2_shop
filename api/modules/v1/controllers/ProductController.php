@@ -18,19 +18,17 @@ class ProductController extends ActiveController
     ];
     public function behaviors()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
-            [
-                'class' => Cors::class,
-                'cors' => [
-                    'Origin' => ['https://kun.uz'],
-                    'Access-Control-Request-Method' => ['GET', 'POST'],
-                    'Access-Control-Allow-Credentials' => true,
-                    'Access-Control-Allow-Headers' => ['Content-Type','Authorization']
+        $behaviors = parent::behaviors();
+        $behaviors['corsFilter'] = [
+            'class' => Cors::class,
 
-                ],
-            ],
-        ], parent::behaviors()
-        );
+            'cors' => [
+                'Origin' => ["http://localhost:9999"],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+            ]
+        ];
+
+        return $behaviors;
 
     }
 
