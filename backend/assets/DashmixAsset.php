@@ -24,7 +24,7 @@ class DashmixAsset extends AssetBundle
         'dashmix/js/dashmix.app.min.js',
 
 
-        //'dashmix/js/lib/jquery.min.js',
+        'dashmix/js/lib/jquery.min.js',
 
 
 
