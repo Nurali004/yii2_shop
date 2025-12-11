@@ -21,11 +21,11 @@ class DashmixAsset extends AssetBundle
         'dashmix/js/pages/op_auth_signin.min.js',
         'js/main.js',
         'js/app.js',
+        'dashmix/js/dashmix.app.min.js',
 
-    
-        'dashmix/js/lib/jquery.min.js',
 
-        'dashmix/lib/jquery.min.js',
+        //'dashmix/js/lib/jquery.min.js',
+
 
 
 
