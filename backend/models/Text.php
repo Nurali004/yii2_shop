@@ -17,12 +17,17 @@ class Text
         KOMPYUTERLAR = "💻Kompyuterlar",
         MAISHIY_TEXNIKALAR = "🏠Maishiy Texnikalar",
         ORTGA = "⬅️Ortga",
-        KOMPYUTER_ORTGA = "⬅️ Ortga",
-        ASUS_ORTGA = "  ⬅️ Ortga",
-        ASUS_RANG_ORTGA = "⬅️ Ortga Qaytish",
+        CATEGORY_ORTGA = "⬅️ Ortga",
+
         ASUS_OQ = "⚪️ Oq Rangli",
         ASUS_QORA = "⚫️ Qora Rangli",
-        ASUS = 'Asus';
+        ASUS = 'Asus',
+
+    //Contact Page
+
+    ISM = "Ism",
+    FAMILIYA = "Familiya",
+    TELEFON_RAQAM = "Telefon raqam";
 
 
 }

@@ -1,0 +1,44 @@
+<?php
+
+namespace api\modules\v1\controllers;
+
+
+
+use api\models\Product;
+use yii\data\ActiveDataProvider;
+use yii\filters\Cors;
+use yii\helpers\ArrayHelper;
+use yii\rest\ActiveController;
+
+class ProductController extends ActiveController
+{
+    public $serializer = [
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'products',
+    ];
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            [
+                'class' => Cors::class,
+                'cors' => [
+                    'Origin' => ['https://kun.uz'],
+                    'Access-Control-Request-Method' => ['GET', 'POST'],
+                    'Access-Control-Allow-Credentials' => true,
+                    'Access-Control-Allow-Headers' => ['Content-Type','Authorization']
+
+                ],
+            ],
+        ], parent::behaviors()
+        );
+
+    }
+
+    public $modelClass = 'api\modules\v1\models\Product';
+    public function actionIndex()
+    {
+        return Product::find()->all();
+
+    }
+
+}

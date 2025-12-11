@@ -1,4 +1,8 @@
 <?php
+
+use yii\filters\ContentNegotiator;
+use yii\web\Response;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -11,17 +15,29 @@ return [
 
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'api\controllers',
-    'bootstrap' => ['log'],
-
-    'modules' => [
-
+    'bootstrap' => [
+        'log',
+        [
+            'class' => 'yii\filters\ContentNegotiator',
+            'formats' => [
+                'application/json' => Response::FORMAT_JSON,
+                'application/xml' => Response::FORMAT_XML,
+            ],
 
     ],
-    'components' => [
-        'telegram' => [
-            'class' => 'aki\telegram\Telegram',
-            'botToken' => '8324193089:AAF0tsuNAOaFRLfqCcWLm54XqUnKHOQ57gQ',
+
         ],
+
+    'modules' => [
+        'v1' => [
+            'class' => 'api\modules\v1\Module',
+            ],
+        'v2' => [
+            'class' => 'api\modules\v2\Module',
+        ],
+        ],
+    'components' => [
+
 
         'assetManager' => [],
         'request' => [
@@ -58,7 +74,7 @@ return [
             'enableStrictParsing' => false,
             'showScriptName' => false,
             'rules' => [
-                'POST telegram/webhook' => 'telegram/webhook',
+
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
@@ -70,8 +86,17 @@ return [
                         'favorite',
                         'order',
                         'partner',
-                        'telegram',
+                        'product-image',
+                        'v1/user',
+                        'v1/product',
+                        'v2/user',
 
+
+                    ],
+                 //   'pluralize' => true,
+
+                    'extraPatterns' => [
+                        'POST user' => 'user/index',
                     ]
                 ],
 
