@@ -6,7 +6,7 @@ use common\models\Order;
 use yii\rest\ActiveController;
 use yii\rest\Controller;
 
-class OrderController extends ActiveController
+class OrderController extends MyController
 {
     public $modelClass = 'api\models\Order';
 

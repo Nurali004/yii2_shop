@@ -50,6 +50,8 @@ return [
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            'enableSession' => false,
+            'loginUrl' => null,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
@@ -95,10 +97,9 @@ return [
                     ],
                  //   'pluralize' => true,
 
-                    'extraPatterns' => [
-                        'POST user' => 'user/index',
-                    ]
                 ],
+
+                'auth' => 'auth/login',
 
             ],
         ]

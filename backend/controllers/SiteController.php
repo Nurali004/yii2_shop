@@ -102,7 +102,7 @@ class SiteController extends Controller
         $order_st = Order::find()->where(['status' => [1,2]])->count('*');
         $order_cm = Order::find()->where(['status' => 1])->count('*');
 
-//gggg
+
 
 
         return $this->render('index', [

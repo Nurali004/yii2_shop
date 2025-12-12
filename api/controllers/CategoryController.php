@@ -3,13 +3,17 @@
 namespace api\controllers;
 
 use common\models\Category;
+use common\models\User;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\rest\Controller;
 use yii\web\Response;
 
-class CategoryController extends ActiveController
+class CategoryController extends MeningController
 {
+
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();
