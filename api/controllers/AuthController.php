@@ -17,7 +17,10 @@ class AuthController extends Controller
     public function actionLogin()
     {
         $user = new LoginForm();
+
         if ($user->load(\Yii::$app->request->post(), '') && $token = $user->login()) {
+
+
             \Yii::$app->response->format  = 'json';
             return [
                 'token' => $token,

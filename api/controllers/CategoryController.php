@@ -10,7 +10,7 @@ use yii\rest\ActiveController;
 use yii\rest\Controller;
 use yii\web\Response;
 
-class CategoryController extends MeningController
+class CategoryController extends MyController
 {
 
 

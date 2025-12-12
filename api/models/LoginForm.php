@@ -57,12 +57,16 @@ class LoginForm extends Model
      */
     public function login()
     {
+
         if ($this->validate()) {
            $user = $this->getUser();
            $countTokens = UserAccessToken::find()->where(['user_id' => $user->id])->count();
+
            if ($countTokens > 10) {
                return false;
            }
+
+
            $access_token = Yii::$app->security->generateRandomString();
            $userAccessToken = new UserAccessToken();
            $userAccessToken->user_id = $user->id;
