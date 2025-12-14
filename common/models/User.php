@@ -86,8 +86,8 @@ class User extends ActiveRecord implements IdentityInterface
         ])->one();
 
 
+        if ($accessToken /*&& $accessToken->expire_at > $now*/) {
 
-        if ($accessToken && $accessToken->expire_at > $now) {
             return static::findOne(['id' => $accessToken->user_id, 'status' => self::STATUS_ACTIVE]);
         }
 
