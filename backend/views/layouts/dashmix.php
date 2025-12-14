@@ -196,7 +196,7 @@ use yii\bootstrap5\NavBar;
                             <!-- Toggle Side Overlay -->
                             <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
 
-                            <?= Html::a('<i class="far fa-fw fa-building me-1"></i> Settings', ['/site/setting'], ['class' => 'dropdown-item']) ?>
+                            <?= Html::a('<i class="far fa-fw fa-building me-1"></i> Settings', ['/settings'], ['class' => 'dropdown-item']) ?>
 
 
                             <!-- END Side Overlay -->

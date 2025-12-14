@@ -190,52 +190,52 @@ $this->title = Yii::t('menu', 'Online Shopping');
                         <button type="button" class="btn-block-option" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="si si-chemistry"></i>
                         </button>
-<!--                        <div class="dropdown-menu dropdown-menu-end">-->
-<!--                            --><?php //foreach ($orders as $order): ?>
-<!--                            <a class="dropdown-item" href="#">-->
-<!--                                <i class="far fa-fw fa-dot-circle opacity-50 me-1"></i>--><?php //= $order->status ?>
-<!--                            </a>-->
-<!--                            --><?php //endforeach; ?>
-<!---->
-<!--                        </div>-->
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <?php foreach ($orders as $order): ?>
+                            <a class="dropdown-item" href="#">
+                                <i class="far fa-fw fa-dot-circle opacity-50 me-1"></i><?= $order->status ?>
+                            </a>
+                            <?php endforeach; ?>
+
+                        </div>
                     </div>
                 </div>
             </div>
-<!--            <div class="block-content">-->
-<!--                <table class="table table-striped table-hover table-borderless table-vcenter fs-sm">-->
-<!--                    <thead>-->
-<!--                    <tr class="text-uppercase">-->
-<!--                        <th>Product</th>-->
-<!--                        <th class="d-none d-xl-table-cell">Date</th>-->
-<!--                        <th>Status</th>-->
-<!--                        <th class="d-none d-sm-table-cell text-end" style="width: 120px;">Price</th>-->
-<!---->
-<!--                    </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody>-->
-<!--                    --><?php //foreach ($orderItems as $order): ?>
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            <span class="fw-semibold">--><?php //= $order->product->$name?><!--</span>-->
-<!--                        </td>-->
-<!--                        <td class="d-none d-xl-table-cell">-->
-<!--                            <span class="fs-sm text-muted">--><?php //= $order->order->created_at ?><!--</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            --><?php //if ($order->order->status == Order::STATUS_PROCESSING): ?>
-<!--                            <span class="fw-semibold text-warning">--><?php //=
-//                                'Processing' ?><!--</span>-->
-<!--                            --><?php //endif; ?>
-<!--                        </td>-->
-<!--                        <td class="d-none d-sm-table-cell text-end fw-medium">-->
-<!--                            --><?php //= $order->price ?>
-<!--                        </td>-->
-<!---->
-<!--                    </tr>-->
-<!--                    --><?php //endforeach; ?>
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </div>-->
+            <div class="block-content">
+                <table class="table table-striped table-hover table-borderless table-vcenter fs-sm">
+                    <thead>
+                    <tr class="text-uppercase">
+                        <th>Product</th>
+                        <th class="d-none d-xl-table-cell">Date</th>
+                        <th>Status</th>
+                        <th class="d-none d-sm-table-cell text-end" style="width: 120px;">Price</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($orderItems as $order): ?>
+                    <tr>
+                        <td>
+                            <span class="fw-semibold"><?= $order->product->$name?></span>
+                        </td>
+                        <td class="d-none d-xl-table-cell">
+                            <span class="fs-sm text-muted"><?= $order->order->created_at ?></span>
+                        </td>
+                        <td>
+                            <?php if ($order->order->status == Order::STATUS_PROCESSING): ?>
+                            <span class="fw-semibold text-warning"><?=
+                                'Processing' ?></span>
+                            <?php endif; ?>
+                        </td>
+                        <td class="d-none d-sm-table-cell text-end fw-medium">
+                            <?= $order->price ?>
+                        </td>
+
+                    </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
             <div class="block-content block-content-full block-content-sm bg-body-light fs-sm text-center">
                 <a class="fw-medium" href="<?= \yii\helpers\Url::to(['order/index']) ?>">
                     View all orders

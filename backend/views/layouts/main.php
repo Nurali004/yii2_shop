@@ -35,7 +35,7 @@ use yii\bootstrap5\NavBar;
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => Yii::t('menu','Home'), 'url' => ['/site/index']],
         ['label' => 'Category', 'url' => ['/category/index']],
         ['label' => 'Product', 'url' => ['/product/index']],
         ['label' => 'Order', 'url' => ['/order/index']],

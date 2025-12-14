@@ -86,14 +86,14 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
 
                     ]);
                     $menuItems = [
-                            ['label' => 'Home', 'url' => ['/site/index']],
-                            ['label' => 'About', 'url' => ['/site/about']],
-                            ['label' => 'Contact', 'url' => ['/site/contact']],
-                            ['label' => 'Shop', 'url' => ['/shop/index']],
+                            ['label' => Yii::t('menu', 'Home'), 'url' => ['/site/index']],
+                            ['label' => Yii::t('menu','About'), 'url' => ['/site/about']],
+                            ['label' => Yii::t('site','Contact'), 'url' => ['/site/contact']],
+                            ['label' => Yii::t('menu','Shop'), 'url' => ['/shop/index']],
 
                     ];
                     if (Yii::$app->user->isGuest) {
-                        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+                        $menuItems[] = ['label' => Yii::t('menu','SignUp'), 'url' => ['/site/signup']];
                     }
 
                     echo Nav::widget([
@@ -114,7 +114,7 @@ $cartItemCount = $this->params['cartItemCount'] ?? 0;
                     ]);
 
                     if (Yii::$app->user->isGuest) {
-                        echo Html::tag('div', Html::a('Login', ['/site/login'], ['class' => ['btn btn-link login text-decoration-none']]), ['class' => ['d-flex']]);
+                        echo Html::tag('div', Html::a(Yii::t('menu','Login'), ['/site/login'], ['class' => ['btn btn-link login text-decoration-none']]), ['class' => ['d-flex']]);
                     } else {
                         echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
                                 . Html::submitButton(

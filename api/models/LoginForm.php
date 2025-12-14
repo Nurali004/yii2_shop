@@ -62,7 +62,7 @@ class LoginForm extends Model
            $user = $this->getUser();
            $countTokens = UserAccessToken::find()->where(['user_id' => $user->id])->count();
 
-           if ($countTokens > 10) {
+           if ($countTokens > 50) {
                return false;
            }
 
